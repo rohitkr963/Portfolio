@@ -1,0 +1,397 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Dark mode scrollbar */
+@media (prefers-color-scheme: dark) {
+  ::-webkit-scrollbar-track {
+    background: #1f1f1f;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #555;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #777;
+  }
+}
+
+/* Smooth animations */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease-out;
+}
+
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Gradient text - Neon Cyberpunk Theme */
+.gradient-text {
+  background: linear-gradient(135deg, #00f5ff 0%, #7b2ff7 50%, #ff006e 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 4s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Neon glow effect */
+.neon-glow {
+  box-shadow: 0 0 20px rgba(0, 245, 255, 0.3),
+              0 0 40px rgba(123, 47, 247, 0.2),
+              0 0 60px rgba(255, 0, 110, 0.1);
+}
+
+/* Grid background pattern */
+.bg-grid-pattern {
+  background-image: 
+    linear-gradient(rgba(0, 245, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 245, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Glassmorphism card */
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Scan line animation */
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.scanline {
+  animation: scanline 8s linear infinite;
+}
+
+/* Glass morphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Dark mode glass */
+@media (prefers-color-scheme: dark) {
+  .glass {
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Performance optimizations */
+:root {
+  --animation-quality: 1;
+  --particle-count: 2000;
+}
+
+.low-performance {
+  --animation-quality: 0.5;
+  --particle-count: 500;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* 3D Performance optimizations */
+canvas {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* GPU acceleration for 3D elements */
+.three-container {
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* Optimize for mobile devices */
+@media (max-width: 768px) {
+  .three-container {
+    transform: scale(0.8);
+  }
+}
+
+/* Animated Background Blobs */
+@keyframes blob {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+.animate-blob {
+  animation: blob 7s infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+/* Floating Animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Pulse Animation */
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s ease-in-out infinite;
+}
+
+/* Gradient Animation */
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 3s ease infinite;
+}
+
+/* Animated Underline Effect */
+.animated-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.animated-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #6366f1, #a855f7, #ec4899);
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+.animated-underline:hover::after {
+  width: 100%;
+}
+
+/* Ripple Effect for Buttons */
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+.ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.ripple:active::before {
+  width: 300px;
+  height: 300px;
+  transition: 0s;
+}
+
+/* Parallax Scroll Effect */
+.parallax {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Glow Pulse Animation */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.3),
+                0 0 40px rgba(168, 85, 247, 0.2),
+                0 0 60px rgba(236, 72, 153, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.5),
+                0 0 60px rgba(168, 85, 247, 0.3),
+                0 0 90px rgba(236, 72, 153, 0.2);
+  }
+}
+
+.glow-pulse {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+/* Shimmer Effect */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Cursor Follow Effect */
+.cursor-follow {
+  pointer-events: none;
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(99, 102, 241, 0.5);
+  mix-blend-mode: difference;
+  transition: transform 0.2s ease;
+  z-index: 9999;
+}
+
+/* Code Font for Technical Terms */
+.code-font {
+  font-family: 'Fira Code', 'Monaco', 'Courier New', monospace;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 600;
+}
