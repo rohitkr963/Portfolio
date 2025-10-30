@@ -6,6 +6,7 @@ import { useInView } from 'react-intersection-observer'
 import { FaCertificate, FaAward, FaGraduationCap, FaExternalLinkAlt, FaEye } from 'react-icons/fa'
 import Image from 'next/image'
 import ImageModal from './ImageModal'
+import CertificateCarousel from './CertificateCarousel'
 
 const Certificates = () => {
   const [ref, inView] = useInView({
@@ -104,129 +105,35 @@ const Certificates = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={inView ? { scale: 1 } : {}}
+            transition={{ duration: 0.5, type: "spring" }}
+            className="inline-block px-4 py-2 rounded-full bg-gradient-to-r from-indigo-100 to-purple-100 dark:from-indigo-900/30 dark:to-purple-900/30 border border-indigo-200 dark:border-indigo-800 mb-4"
+          >
+            <span className="text-sm font-semibold gradient-text">🏆 My Achievements</span>
+          </motion.div>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-            <span className="gradient-text">Certificates</span>
+            Professional <span className="gradient-text">Certificates</span>
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            Professional certifications and achievements
+            Certifications and achievements that showcase my expertise
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {certificates.map((cert, index) => (
-            <motion.div
-              key={cert.id}
-              initial={{ opacity: 0, y: 50 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
-              whileHover={{ scale: 1.05 }}
-              className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200 dark:border-gray-700"
-            >
-              {/* Certificate Image (if available) */}
-              {cert.image && (
-                <div 
-                  onClick={() => openImageModal(cert.image, cert.title)}
-                  className="relative h-48 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-600 cursor-pointer group overflow-hidden"
-                >
-                  <Image
-                    src={cert.image}
-                    alt={cert.title}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
-                    <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/30">
-                      <FaEye className="text-white text-xl" />
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              <div className="p-8">
-                {/* Icon */}
-                <div className={`w-16 h-16 ${cert.bgColor} rounded-full flex items-center justify-center mb-6`}>
-                  <cert.icon className={`${cert.color} text-2xl`} />
-                </div>
-
-                {/* Content */}
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                  {cert.title}
-                </h3>
-                
-                <p className="text-primary-600 dark:text-primary-400 font-semibold mb-2">
-                  {cert.issuer}
-                </p>
-                
-                <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
-                  {cert.description}
-                </p>
-                
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-500 dark:text-gray-400">
-                    {cert.date}
-                  </span>
-                  {cert.verifyLink ? (
-                    <motion.a
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      href={cert.verifyLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-primary-600 dark:text-primary-400 font-medium flex items-center gap-1 hover:underline"
-                    >
-                      Verify <FaExternalLinkAlt className="text-xs" />
-                    </motion.a>
-                  ) : (
-                    <span className="text-sm text-primary-600 dark:text-primary-400 font-medium">
-                      Verified
-                    </span>
-                  )}
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Additional Achievements */}
+        {/* Certificate Carousel */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-16 bg-gradient-to-r from-primary-50 to-primary-100 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-8"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={inView ? { opacity: 1, scale: 1 } : {}}
+          transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
-            Additional Achievements
-          </h3>
-          
-          <div className="grid md:grid-cols-3 gap-8 text-center">
-            <div>
-              <div className="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2">
-                15+
-              </div>
-              <div className="text-gray-600 dark:text-gray-400">
-                Online Courses Completed
-              </div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2">
-                5+
-              </div>
-              <div className="text-gray-600 dark:text-gray-400">
-                Years of Continuous Learning
-              </div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2">
-                100%
-              </div>
-              <div className="text-gray-600 dark:text-gray-400">
-                Certification Success Rate
-              </div>
-            </div>
-          </div>
+          <CertificateCarousel 
+            certificates={certificates}
+            openImageModal={openImageModal}
+          />
         </motion.div>
-      </div>
 
+      </div>
       {/* Image Modal */}
       <ImageModal
         image={selectedImage}

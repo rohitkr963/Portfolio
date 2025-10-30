@@ -1,22 +1,80 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense, lazy } from 'react'
+import dynamic from 'next/dynamic'
+
+// Critical components - loaded immediately (above the fold)
 import Hero from '../components/Hero'
-import About from '../components/About'
-import Stats from '../components/Stats'
-import Skills from '../components/Skills'
-import Projects from '../components/Projects'
-import Experience from '../components/Experience'
-import Education from '../components/Education'
-import Achievements from '../components/Achievements'
-import Certificates from '../components/Certificates'
-import Contact from '../components/Contact'
 import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
 import SmoothScroll from '../components/SmoothScroll'
 import ScrollProgress from '../components/ScrollProgress'
-import WhatsAppButton from '../components/WhatsAppButton'
-import { Suspense } from 'react'
+
+// Lazy load components below the fold with dynamic imports
+const About = dynamic(() => import('../components/About'), {
+  loading: () => <ComponentSkeleton />,
+  ssr: true // Enable SSR for SEO
+})
+
+const Stats = dynamic(() => import('../components/Stats'), {
+  loading: () => <ComponentSkeleton />,
+  ssr: true
+})
+
+const Skills = dynamic(() => import('../components/Skills'), {
+  loading: () => <ComponentSkeleton />,
+  ssr: true
+})
+
+const Projects = dynamic(() => import('../components/Projects'), {
+  loading: () => <ComponentSkeleton />,
+  ssr: true
+})
+
+const Experience = dynamic(() => import('../components/Experience'), {
+  loading: () => <ComponentSkeleton />,
+  ssr: true
+})
+
+const Education = dynamic(() => import('../components/Education'), {
+  loading: () => <ComponentSkeleton />,
+  ssr: true
+})
+
+const Achievements = dynamic(() => import('../components/Achievements'), {
+  loading: () => <ComponentSkeleton />,
+  ssr: true
+})
+
+const Certificates = dynamic(() => import('../components/Certificates'), {
+  loading: () => <ComponentSkeleton />,
+  ssr: true
+})
+
+const Contact = dynamic(() => import('../components/Contact'), {
+  loading: () => <ComponentSkeleton />,
+  ssr: true
+})
+
+const Footer = dynamic(() => import('../components/Footer'), {
+  loading: () => <ComponentSkeleton height="h-32" />,
+  ssr: true
+})
+
+const WhatsAppButton = dynamic(() => import('../components/WhatsAppButton'), {
+  ssr: false // Client-only component
+})
+
+// Loading skeleton component
+function ComponentSkeleton({ height = 'h-screen' }) {
+  return (
+    <div className={`${height} w-full bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 animate-pulse flex items-center justify-center`}>
+      <div className="text-center">
+        <div className="w-16 h-16 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+        <p className="text-gray-600 dark:text-gray-400">Loading...</p>
+      </div>
+    </div>
+  )
+}
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true)

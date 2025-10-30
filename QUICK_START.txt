@@ -1,0 +1,31 @@
+===============================================
+   EMAIL SETUP - QUICK STEPS
+===============================================
+
+1. Go to: https://www.emailjs.com/
+   - Sign up (FREE)
+   - 200 emails/month
+
+2. Dashboard mein jao:
+   - Add Email Service (Gmail)
+   - Create Email Template
+   - Copy 3 IDs (Service, Template, Public Key)
+
+3. Portfolio folder mein file banao:
+   Filename: .env.local
+   
+   Content:
+   NEXT_PUBLIC_EMAILJS_SERVICE_ID=service_xxx
+   NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=template_xxx
+   NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=xxxxxxxxx
+
+4. Dev server restart:
+   npm run dev
+
+5. Test karo contact form!
+
+Detailed guide: EMAILJS_SETUP.md padhna
+
+===============================================
+DONE! Messages ab tumhare email pe jayenge!
+===============================================

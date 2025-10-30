@@ -30,8 +30,8 @@ const Experience = () => {
       type: 'work',
       title: 'Full Stack Development Intern',
       company: 'Alpha Intern',
-      location: 'Remote',
-      period: 'TBD',
+      location: 'offline',
+      period: '3 month',
       description: 'Working on full-stack development projects, building modern web applications and enhancing technical skills.',
       achievements: [
         'Developing full-stack web applications',
@@ -44,7 +44,7 @@ const Experience = () => {
       type: 'work',
       title: 'AI/ML Training Program',
       company: 'Xplore Company',
-      location: 'Remote',
+      location: 'offline',
       period: '1 Month',
       description: 'Completed intensive AI/ML training program covering machine learning fundamentals, algorithms, and practical applications. The program also included comprehensive aptitude training to enhance problem-solving and analytical skills.',
       achievements: [

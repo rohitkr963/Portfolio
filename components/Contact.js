@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
+import emailjs from '@emailjs/browser'
 import { 
   FaEnvelope, 
   FaPhone, 
@@ -40,15 +41,50 @@ const Contact = () => {
     e.preventDefault()
     setIsSubmitting(true)
     
-    // Simulate form submission
-    setTimeout(() => {
+    try {
+      // EmailJS configuration
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID
+      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+
+      // Check if all EmailJS credentials are configured
+      if (!serviceId || !templateId || !publicKey) {
+        console.error('EmailJS credentials not configured')
+        setSubmitStatus('error')
+        setIsSubmitting(false)
+        setTimeout(() => setSubmitStatus('idle'), 5000)
+        return
+      }
+
+      // Send email using EmailJS
+      const result = await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          to_name: 'Rohit Kumar',
+        },
+        publicKey
+      )
+
+      console.log('Email sent successfully:', result)
       setIsSubmitting(false)
       setSubmitStatus('success')
       setFormData({ name: '', email: '', subject: '', message: '' })
       
-      // Reset status after 3 seconds
-      setTimeout(() => setSubmitStatus('idle'), 3000)
-    }, 2000)
+      // Reset status after 5 seconds
+      setTimeout(() => setSubmitStatus('idle'), 5000)
+    } catch (error) {
+      console.error('Failed to send email:', error)
+      setIsSubmitting(false)
+      setSubmitStatus('error')
+      
+      // Reset status after 5 seconds
+      setTimeout(() => setSubmitStatus('idle'), 5000)
+    }
   }
 
   const contactInfo = [

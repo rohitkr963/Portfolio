@@ -194,7 +194,7 @@ const Achievements = () => {
             { icon: FaTrophy, value: '1', label: 'National Hackathon Win', color: 'from-yellow-500 to-orange-500' },
             { icon: FaCode, value: '10+', label: 'Projects Completed', color: 'from-blue-500 to-indigo-500' },
             { icon: FaMedal, value: '8.56', label: 'CGPA', color: 'from-green-500 to-emerald-500' },
-            { icon: FaStar, value: '3+', label: 'Years Coding', color: 'from-purple-500 to-pink-500' }
+            { icon: FaStar, value: '2+', label: 'Years Coding', color: 'from-purple-500 to-pink-500' }
           ].map((stat, index) => (
             <motion.div
               key={index}
