@@ -1,12 +1,22 @@
 'use client'
 
 import { useState } from 'react'
+import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { FaCertificate, FaAward, FaGraduationCap, FaExternalLinkAlt, FaEye } from 'react-icons/fa'
 import Image from 'next/image'
-import ImageModal from './ImageModal'
-import CertificateCarousel from './CertificateCarousel'
+
+// Lazy-load heavy/interactive components to improve initial load
+const CertificateCarousel = dynamic(() => import('./CertificateCarousel'), {
+  ssr: false,
+  loading: () => <div className="w-full h-64 flex items-center justify-center">Loading carousel…</div>
+})
+
+const ImageModal = dynamic(() => import('./ImageModal'), {
+  ssr: false,
+  loading: () => null
+})
 
 const Certificates = () => {
   const [ref, inView] = useInView({
@@ -42,8 +52,8 @@ const Certificates = () => {
       icon: FaCertificate,
       color: 'text-green-500',
       bgColor: 'bg-green-100 dark:bg-green-900',
-      image: '', // Add your certificate image path here: '/certificates/mongodb.jpg'
-      verifyLink: '' // Add verification URL here if available
+      image: '/mongodb.png',
+      verifyLink: 'https://learn.mongodb.com/c/8vcGb-QBS42AwRNtMxDcQA'
     },
     {
       id: 2,
@@ -54,7 +64,7 @@ const Certificates = () => {
       icon: FaAward,
       color: 'text-blue-500',
       bgColor: 'bg-blue-100 dark:bg-blue-900',
-      image: '', // Add your certificate image path here
+      image: '/full stack delta .png',
       verifyLink: ''
     },
     { 
@@ -66,8 +76,8 @@ const Certificates = () => {
       icon: FaGraduationCap,
       color: 'text-cyan-500',
       bgColor: 'bg-cyan-100 dark:bg-cyan-900',
-      image: '',
-      verifyLink: ''
+      image: '/web development job simulation.png',
+      verifyLink: 'https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/2t4QruSmKkrN8jr7G/7q8DN5enMzSHqLwev_2t4QruSmKkrN8jr7G_zFT5wdSXkkSPut6id_1746604341989_completion_certificate.pdf'
     },
     {
       id: 4,
@@ -78,8 +88,8 @@ const Certificates = () => {
       icon: FaCertificate,
       color: 'text-purple-500',
       bgColor: 'bg-purple-100 dark:bg-purple-900',
-      image: '',
-      verifyLink: ''
+      image: '/skyscanner frontend .png',
+      verifyLink: 'https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/skoQmxqhtgWmKv2pm/km4rw7dihDr3etqom_skoQmxqhtgWmKv2pm_zFT5wdSXkkSPut6id_1746695524447_completion_certificate.pdf'
     },
     {
       id: 5,
@@ -90,7 +100,31 @@ const Certificates = () => {
       icon: FaAward,
       color: 'text-orange-500',
       bgColor: 'bg-orange-100 dark:bg-orange-900',
-      image: '',
+      image: '/coursera online auction server.png',
+      verifyLink: 'https://www.coursera.org/account/accomplishments/verify/QZENWP45BTDV'
+    },
+    {
+      id: 6,
+      title: 'Industrial Training',
+      issuer: 'InternElite',
+      date: '2024',
+      description: 'Comprehensive industrial training program covering real-world industry practices and standards',
+      icon: FaGraduationCap,
+      color: 'text-red-500',
+      bgColor: 'bg-red-100 dark:bg-red-900',
+      image: '/industrial tranning.png',
+      verifyLink: ''
+    },
+    {
+      id: 7,
+      title: 'Web Development Internship',
+      issuer: 'InternElite',
+      date: '2024',
+      description: 'Hands-on internship experience in full-stack web development with modern technologies',
+      icon: FaCertificate,
+      color: 'text-teal-500',
+      bgColor: 'bg-teal-100 dark:bg-teal-900',
+      image: '/internship internselite.png',
       verifyLink: ''
     }
   ]
@@ -146,3 +180,4 @@ const Certificates = () => {
 }
 
 export default Certificates
+

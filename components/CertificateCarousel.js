@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaChevronLeft, FaChevronRight, FaExternalLinkAlt, FaEye } from 'react-icons/fa'
 import Image from 'next/image'
@@ -10,26 +10,34 @@ const CertificateCarousel = ({ certificates, openImageModal }) => {
   const [direction, setDirection] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
 
+  const len = certificates?.length || 0
+
   // Auto-slide every 5 seconds
   useEffect(() => {
-    if (isPaused) return
+    if (isPaused || len === 0) return
 
     const interval = setInterval(() => {
-      nextSlide()
+      setDirection(1)
+      setCurrentIndex((prev) => (prev + 1) % len)
     }, 5000)
 
     return () => clearInterval(interval)
-  }, [currentIndex, isPaused, nextSlide])
+  }, [isPaused, len])
 
-  const nextSlide = useCallback(() => {
+  // Early return AFTER all hooks
+  if (!certificates || certificates.length === 0) {
+    return null
+  }
+
+  const nextSlide = () => {
     setDirection(1)
     setCurrentIndex((prev) => (prev + 1) % certificates.length)
-  }, [certificates.length])
+  }
 
-  const prevSlide = useCallback(() => {
+  const prevSlide = () => {
     setDirection(-1)
     setCurrentIndex((prev) => (prev - 1 + certificates.length) % certificates.length)
-  }, [certificates.length])
+  }
 
   const goToSlide = (index) => {
     setDirection(index > currentIndex ? 1 : -1)
@@ -63,7 +71,7 @@ const CertificateCarousel = ({ certificates, openImageModal }) => {
       onMouseLeave={() => setIsPaused(false)}
     >
       {/* Main Carousel Container */}
-      <div className="relative h-[500px] md:h-[600px] overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-gray-800 dark:via-indigo-900/30 dark:to-purple-900/30 shadow-2xl">
+      <div className="relative h-[600px] md:h-[700px] lg:h-[750px] overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-gray-800 dark:via-indigo-900/30 dark:to-purple-900/30 shadow-2xl">
         
         <AnimatePresence initial={false} custom={direction} mode="wait">
           <motion.div
@@ -78,12 +86,12 @@ const CertificateCarousel = ({ certificates, openImageModal }) => {
               opacity: { duration: 0.3 },
               scale: { duration: 0.3 }
             }}
-            className="absolute inset-0 flex items-center justify-center p-8"
+            className="absolute inset-0 flex items-center justify-center p-4 md:p-8"
           >
-            <div className="w-full h-full flex flex-col md:flex-row items-center justify-center gap-8">
+            <div className="w-full h-full flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
               
               {/* Certificate Image */}
-              <div className="w-full md:w-1/2 h-64 md:h-full relative group">
+              <div className="w-full md:w-1/2 h-[300px] md:h-full relative group">
                 {currentCert.image ? (
                   <div 
                     onClick={() => openImageModal(currentCert.image, currentCert.title)}
@@ -93,7 +101,8 @@ const CertificateCarousel = ({ certificates, openImageModal }) => {
                       src={currentCert.image}
                       alt={currentCert.title}
                       fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="object-contain group-hover:scale-105 transition-transform duration-500"
+                      quality={72}
                     />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
                       <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/20 backdrop-blur-sm px-6 py-3 rounded-full border border-white/30">
@@ -109,7 +118,7 @@ const CertificateCarousel = ({ certificates, openImageModal }) => {
               </div>
 
               {/* Certificate Details */}
-              <div className="w-full md:w-1/2 flex flex-col justify-center text-center md:text-left space-y-4">
+              <div className="w-full md:w-1/2 flex flex-col justify-center text-center md:text-left space-y-3 md:space-y-4 px-2 md:px-0">
                 
                 {/* Icon */}
                 <motion.div
@@ -126,7 +135,7 @@ const CertificateCarousel = ({ certificates, openImageModal }) => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
-                  className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white"
+                  className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white leading-tight"
                 >
                   {currentCert.title}
                 </motion.h3>
@@ -136,7 +145,7 @@ const CertificateCarousel = ({ certificates, openImageModal }) => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 }}
-                  className="text-xl font-semibold gradient-text"
+                  className="text-lg md:text-xl font-semibold gradient-text"
                 >
                   {currentCert.issuer}
                 </motion.p>
@@ -146,7 +155,7 @@ const CertificateCarousel = ({ certificates, openImageModal }) => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 }}
-                  className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed"
+                  className="text-gray-600 dark:text-gray-300 text-base md:text-lg leading-relaxed"
                 >
                   {currentCert.description}
                 </motion.p>

@@ -56,7 +56,7 @@ const About = () => {
                     alt="Rohit Kumar"
                     fill
                     className="object-cover"
-                    priority
+                    quality={75}
                   />
                 </div>
               </div>

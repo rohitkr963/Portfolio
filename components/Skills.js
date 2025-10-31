@@ -89,12 +89,6 @@ const Skills = () => {
           logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg'
         },
         { 
-          name: 'PostgreSQL', 
-          icon: SiPostgresql, 
-          color: '#4169E1',
-          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg'
-        },
-        { 
           name: 'MySQL', 
           icon: FaDatabase, 
           color: '#4479A1',
