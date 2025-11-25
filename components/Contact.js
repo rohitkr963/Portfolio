@@ -4,12 +4,12 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import emailjs from '@emailjs/browser'
-import { 
-  FaEnvelope, 
-  FaPhone, 
-  FaMapMarkerAlt, 
-  FaGithub, 
-  FaLinkedin, 
+import {
+  FaEnvelope,
+  FaPhone,
+  FaMapMarkerAlt,
+  FaGithub,
+  FaLinkedin,
   FaTelegram,
   FaDiscord
 } from 'react-icons/fa'
@@ -40,7 +40,7 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsSubmitting(true)
-    
+
     try {
       // EmailJS configuration
       const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID
@@ -74,14 +74,14 @@ const Contact = () => {
       setIsSubmitting(false)
       setSubmitStatus('success')
       setFormData({ name: '', email: '', subject: '', message: '' })
-      
+
       // Reset status after 5 seconds
       setTimeout(() => setSubmitStatus('idle'), 5000)
     } catch (error) {
       console.error('Failed to send email:', error)
       setIsSubmitting(false)
       setSubmitStatus('error')
-      
+
       // Reset status after 5 seconds
       setTimeout(() => setSubmitStatus('idle'), 5000)
     }
@@ -139,7 +139,7 @@ const Contact = () => {
     <section id="contact" className="py-20 bg-gradient-to-b from-white via-pink-50/20 to-white dark:from-gray-900 dark:via-pink-950/20 dark:to-gray-900 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-      
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           ref={ref}
@@ -177,8 +177,8 @@ const Contact = () => {
                 Let's Connect
               </h3>
               <p className="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
-                I'm always interested in new opportunities and exciting projects. 
-                Whether you have a question, want to collaborate, or just want to say hi, 
+                I'm always interested in new opportunities and exciting projects.
+                Whether you have a question, want to collaborate, or just want to say hi,
                 I'd love to hear from you!
               </p>
             </div>
@@ -195,7 +195,7 @@ const Contact = () => {
                   href={info.link}
                   className="flex items-center space-x-4 p-5 rounded-2xl bg-gradient-to-r from-gray-50 to-indigo-50/30 dark:from-gray-800 dark:to-indigo-900/20 hover:from-indigo-50 hover:to-purple-50 dark:hover:from-indigo-900/30 dark:hover:to-purple-900/30 transition-all duration-300 group border border-gray-200 dark:border-gray-700 hover:border-indigo-300 dark:hover:border-indigo-700 shadow-md hover:shadow-xl"
                 >
-                  <motion.div 
+                  <motion.div
                     whileHover={{ rotate: 360 }}
                     transition={{ duration: 0.5 }}
                     className="p-4 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl shadow-lg"
@@ -233,6 +233,7 @@ const Contact = () => {
                     rel="noopener noreferrer"
                     className={`p-3 bg-gray-100 dark:bg-gray-800 rounded-full text-gray-600 dark:text-gray-400 transition-all duration-200 ${social.color}`}
                     title={social.name}
+                    aria-label={social.name}
                   >
                     <social.icon size={20} />
                   </motion.a>
@@ -271,7 +272,7 @@ const Contact = () => {
                     placeholder="Your name"
                   />
                 </div>
-                
+
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Email *
@@ -326,11 +327,10 @@ const Contact = () => {
                 disabled={isSubmitting}
                 whileHover={{ scale: 1.03, y: -2 }}
                 whileTap={{ scale: 0.97 }}
-                className={`relative w-full py-4 px-6 rounded-xl font-bold text-lg transition-all duration-300 shadow-lg overflow-hidden ${
-                  isSubmitting
+                className={`relative w-full py-4 px-6 rounded-xl font-bold text-lg transition-all duration-300 shadow-lg overflow-hidden ${isSubmitting
                     ? 'bg-gray-400 cursor-not-allowed'
                     : 'bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-700 hover:via-purple-700 hover:to-pink-700 text-white shadow-purple-500/30 hover:shadow-purple-500/50'
-                }`}
+                  }`}
               >
                 {!isSubmitting && (
                   <motion.div

@@ -42,7 +42,7 @@ const ResumeModal = ({ isOpen, onClose }) => {
   const handlePrint = () => {
     // Open PDF in new window for printing
     window.open('/resume.pdf', '_blank')
-    
+
     // Track print
     if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('event', 'resume_print', {
@@ -115,46 +115,10 @@ const ResumeModal = ({ isOpen, onClose }) => {
                       </p>
                     </div>
 
-                    {/* Format Selection */}
-                    <div className="grid md:grid-cols-2 gap-4 mb-8">
-                      <motion.button
-                        whileHover={{ scale: 1.02, y: -5 }}
-                        whileTap={{ scale: 0.98 }}
-                        onClick={() => setDownloadFormat('pdf')}
-                        className={`p-6 rounded-2xl border-2 transition-all duration-300 ${
-                          downloadFormat === 'pdf'
-                            ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20 shadow-lg shadow-indigo-500/20'
-                            : 'border-gray-200 dark:border-gray-700 hover:border-indigo-300 dark:hover:border-indigo-700'
-                        }`}
-                      >
-                        <FaFilePdf className={`text-4xl mb-3 ${
-                          downloadFormat === 'pdf' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-400'
-                        }`} />
-                        <h4 className="font-bold text-gray-900 dark:text-white mb-1">PDF Format</h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
-                          Best for viewing and printing
-                        </p>
-                      </motion.button>
-
-                      <motion.button
-                        whileHover={{ scale: 1.02, y: -5 }}
-                        whileTap={{ scale: 0.98 }}
-                        onClick={() => setDownloadFormat('docx')}
-                        className={`p-6 rounded-2xl border-2 transition-all duration-300 ${
-                          downloadFormat === 'docx'
-                            ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/20 shadow-lg shadow-purple-500/20'
-                            : 'border-gray-200 dark:border-gray-700 hover:border-purple-300 dark:hover:border-purple-700'
-                        }`}
-                      >
-                        <FaFileWord className={`text-4xl mb-3 ${
-                          downloadFormat === 'docx' ? 'text-purple-600 dark:text-purple-400' : 'text-gray-400'
-                        }`} />
-                        <h4 className="font-bold text-gray-900 dark:text-white mb-1">Word Format</h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
-                          Editable document format
-                        </p>
-                      </motion.button>
-                    </div>
+                    {/* Format Selection - Hidden until DOCX is available */}
+                    {/* <div className="grid md:grid-cols-2 gap-4 mb-8">
+                      ...
+                    </div> */}
 
                     {/* Action Buttons */}
                     <div className="grid md:grid-cols-3 gap-4">
@@ -175,7 +139,7 @@ const ResumeModal = ({ isOpen, onClose }) => {
                         className="flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-700 hover:via-purple-700 hover:to-pink-700 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
                       >
                         <FaDownload />
-                        Download {downloadFormat.toUpperCase()}
+                        Download Resume
                       </motion.button>
 
                       <motion.button
@@ -212,7 +176,7 @@ const ResumeModal = ({ isOpen, onClose }) => {
                       >
                         ← Back to Download Options
                       </motion.button>
-                      
+
                       <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}

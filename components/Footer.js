@@ -30,7 +30,7 @@ const Footer = () => {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-gray-400 mb-4 leading-relaxed"
             >
-              Full Stack Developer passionate about creating amazing digital experiences 
+              Full Stack Developer passionate about creating amazing digital experiences
               and solving complex problems with elegant solutions.
             </motion.p>
             <motion.div
@@ -43,6 +43,7 @@ const Footer = () => {
                 href="https://github.com/rohitkr963"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="GitHub Profile"
                 className="text-gray-400 hover:text-white transition-colors duration-200"
               >
                 <FaGithub size={24} />
@@ -51,6 +52,7 @@ const Footer = () => {
                 href="https://www.linkedin.com/in/rohit-kumar-577572292/"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="LinkedIn Profile"
                 className="text-gray-400 hover:text-white transition-colors duration-200"
               >
                 <FaLinkedin size={24} />
@@ -133,6 +135,7 @@ const Footer = () => {
             onClick={scrollToTop}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
+            aria-label="Back to top"
             className="flex items-center space-x-2 text-gray-400 hover:text-white transition-colors duration-200"
           >
             <span>Back to top</span>

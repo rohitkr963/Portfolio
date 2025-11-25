@@ -1,0 +1,10 @@
+﻿
+> personal-portfolio@0.1.0 build
+> next build
+
+   Γû▓ Next.js 14.0.0
+   - Environments: .env.local
+   - Experiments (use at your own risk):
+     ┬╖ optimizeCss
+
+   Creating an optimized production build ...

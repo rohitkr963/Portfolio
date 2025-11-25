@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { FaDownload, FaGithub, FaLinkedin } from 'react-icons/fa'
 import { HiChevronDown } from 'react-icons/hi'
 import { TypeAnimation } from 'react-type-animation'
@@ -33,22 +33,22 @@ const Hero = () => {
     <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
       {/* 3D Particle Background */}
       <ParticleBackground />
-      
+
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-r from-indigo-400 to-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30 dark:opacity-20 animate-blob"></div>
         <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30 dark:opacity-20 animate-blob animation-delay-2000"></div>
         <div className="absolute top-40 left-1/3 w-96 h-96 bg-gradient-to-r from-pink-400 to-rose-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30 dark:opacity-20 animate-blob animation-delay-4000"></div>
       </div>
-      
+
       {/* Grid Pattern Overlay */}
       <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-      
+
       {/* 3D Animated Sphere - Hidden on mobile, visible on large screens */}
       <div className="hidden lg:block absolute right-10 top-1/2 -translate-y-1/2 w-96 h-96 z-10">
         <Hero3D />
       </div>
-      
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-20">
         <div className="text-center">
           {/* Main Content */}
@@ -117,7 +117,7 @@ const Hero = () => {
               transition={{ delay: 0.8, duration: 0.6 }}
               className="text-lg text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed"
             >
-              I create beautiful, functional, and user-centered digital experiences. 
+              I create beautiful, functional, and user-centered digital experiences.
               Passionate about clean code, innovative solutions, and continuous learning.
             </motion.p>
 
@@ -132,7 +132,7 @@ const Hero = () => {
                 href="#projects"
                 className="relative bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-700 hover:via-purple-700 hover:to-pink-700 text-white px-8 py-4 rounded-xl font-bold transition-all duration-300 flex items-center gap-2 shadow-2xl shadow-purple-500/50 overflow-hidden group"
               >
-                <motion.span 
+                <motion.span
                   whileHover={{ scale: 1.05 }}
                   className="relative z-10"
                 >
@@ -140,7 +140,7 @@ const Hero = () => {
                 </motion.span>
                 <div className="absolute inset-0 bg-gradient-to-r from-pink-600 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </MagneticButton>
-              
+
               <motion.button
                 onClick={openResumeModal}
                 whileHover={{ scale: 1.05 }}
@@ -200,9 +200,9 @@ const Hero = () => {
       </div>
 
       {/* Resume Modal */}
-      <ResumeModal 
-        isOpen={isResumeModalOpen} 
-        onClose={() => setIsResumeModalOpen(false)} 
+      <ResumeModal
+        isOpen={isResumeModalOpen}
+        onClose={() => setIsResumeModalOpen(false)}
       />
     </section>
   )

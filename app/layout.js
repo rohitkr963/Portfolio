@@ -1,51 +1,33 @@
 import { Inter } from 'next/font/google'
 import './globals.css'
+import SplashCursor from '@/components/SplashCursor'
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ['latin'],
-  display: 'swap', // Optimize font loading
+  display: 'swap',
   preload: true,
 })
 
 export const metadata = {
-  metadataBase: new URL('https://rohitkr963.vercel.app'), // Update with your actual domain
-  
-  title: {
-    default: 'Rohit Kumar - Full Stack Developer | Portfolio',
-    template: '%s | Rohit Kumar'
+  metadataBase: new URL('https://portfolio-rohitkr963.vercel.app'),
+  title: 'Rohit Kumar | Full Stack Developer',
+  description: 'Portfolio of Rohit Kumar, a Full Stack Developer specializing in MERN stack, React, and Next.js.',
+  openGraph: {
+    title: 'Rohit Kumar | Full Stack Developer',
+    description: 'Portfolio of Rohit Kumar, a Full Stack Developer specializing in MERN stack, React, and Next.js.',
+    url: 'https://portfolio-rohitkr963.vercel.app',
+    siteName: 'Rohit Kumar Portfolio',
+    images: [
+      {
+        url: '/opengraph-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Rohit Kumar Portfolio',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
   },
-  
-  description: 'Full Stack Developer specializing in React, Next.js, Node.js, and MongoDB. Explore my projects, skills, and professional experience in web development.',
-  
-  keywords: [
-    'Rohit Kumar',
-    'Full Stack Developer',
-    'Web Developer',
-    'React Developer',
-    'Next.js Developer',
-    'Node.js Developer',
-    'JavaScript Developer',
-    'Frontend Developer',
-    'Backend Developer',
-    'MERN Stack',
-    'Portfolio',
-    'Web Development',
-    'Software Engineer',
-    'MongoDB',
-    'Express.js',
-    'Tailwind CSS',
-    'Three.js',
-    'Framer Motion'
-  ],
-  
-  authors: [{ 
-    name: 'Rohit Kumar',
-    url: 'https://github.com/rohitkr963'
-  }],
-  
-  creator: 'Rohit Kumar',
-  publisher: 'Rohit Kumar',
-  
   robots: {
     index: true,
     follow: true,
@@ -57,65 +39,18 @@ export const metadata = {
       'max-snippet': -1,
     },
   },
-  
-  openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: 'https://rohitkr963.vercel.app',
-    siteName: 'Rohit Kumar Portfolio',
-    title: 'Rohit Kumar - Full Stack Developer | Portfolio',
-    description: 'Full Stack Developer specializing in React, Next.js, Node.js, and MongoDB. Explore my projects, skills, and professional experience.',
-    images: [
-      {
-        url: '/og-image.jpg', // Create this image in public folder (1200x630px recommended)
-        width: 1200,
-        height: 630,
-        alt: 'Rohit Kumar - Full Stack Developer',
-      }
-    ],
-  },
-  
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Rohit Kumar - Full Stack Developer',
-    description: 'Full Stack Developer specializing in React, Next.js, Node.js, and MongoDB.',
-    creator: '@rohitkr963',
-    images: ['/og-image.jpg'],
-  },
-  
   verification: {
-    google: 'your-google-verification-code', // Add Google Search Console verification
-    // yandex: 'your-yandex-verification-code',
-    // bing: 'your-bing-verification-code',
+    google: 'PLACEHOLDER_CODE',
   },
-  
-  alternates: {
-    canonical: 'https://rohitkr963.vercel.app',
-  },
-  
-  category: 'technology',
-  
-  icons: {
-    icon: [
-      { url: '/favicon.ico' },
-      { url: '/icon.png', sizes: '32x32', type: 'image/png' },
-      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
-    ],
-    apple: [
-      { url: '/apple-icon.png', sizes: '180x180', type: 'image/png' },
-    ],
-  },
-  
-  manifest: '/manifest.json',
 }
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" className="scroll-smooth">
+      <body className={`${inter.className} bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300`}>
+        <SplashCursor />
         {children}
       </body>
     </html>
   )
 }
-

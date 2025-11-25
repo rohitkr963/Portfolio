@@ -1,32 +1,30 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useMotionValue, useSpring } from 'framer-motion'
 
-export default function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+const CustomCursor = () => {
   const [isHovering, setIsHovering] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
+  const cursorX = useMotionValue(-100)
+  const cursorY = useMotionValue(-100)
+
+  const springConfig = { damping: 25, stiffness: 700 }
+  const cursorXSpring = useSpring(cursorX, springConfig)
+  const cursorYSpring = useSpring(cursorY, springConfig)
 
   useEffect(() => {
-    // Check if device is mobile
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768 || 'ontouchstart' in window)
-    }
-    
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-
-    const updateMousePosition = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY })
+    const moveCursor = (e) => {
+      cursorX.set(e.clientX - 16)
+      cursorY.set(e.clientY - 16)
     }
 
-    const handleMouseOver = (e) => {
+    const handleMouseEnter = (e) => {
       if (
-        e.target.tagName === 'A' ||
         e.target.tagName === 'BUTTON' ||
+        e.target.tagName === 'A' ||
+        e.target.closest('button') ||
         e.target.closest('a') ||
-        e.target.closest('button')
+        e.target.classList.contains('magnetic-target')
       ) {
         setIsHovering(true)
       } else {
@@ -34,66 +32,52 @@ export default function CustomCursor() {
       }
     }
 
-    window.addEventListener('mousemove', updateMousePosition)
-    window.addEventListener('mouseover', handleMouseOver)
+    const handleMouseLeave = () => {
+      setIsHovering(false)
+    }
+
+    window.addEventListener('mousemove', moveCursor)
+    window.addEventListener('mouseover', handleMouseEnter)
+    // window.addEventListener('mouseout', handleMouseLeave)
 
     return () => {
-      window.removeEventListener('resize', checkMobile)
-      window.removeEventListener('mousemove', updateMousePosition)
-      window.removeEventListener('mouseover', handleMouseOver)
+      window.removeEventListener('mousemove', moveCursor)
+      window.removeEventListener('mouseover', handleMouseEnter)
+      // window.removeEventListener('mouseout', handleMouseLeave)
     }
-  }, [])
-
-  // Don't render on mobile
-  if (isMobile) return null
+  }, [cursorX, cursorY])
 
   return (
     <>
-      {/* Main cursor dot */}
+      {/* Main Cursor Dot */}
       <motion.div
-        className="fixed top-0 left-0 w-3 h-3 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 rounded-full pointer-events-none z-[9999] mix-blend-difference"
-        animate={{
-          x: mousePosition.x - 6,
-          y: mousePosition.y - 6,
+        className="fixed top-0 left-0 w-4 h-4 bg-indigo-600 dark:bg-indigo-400 rounded-full pointer-events-none z-[9999] mix-blend-difference"
+        style={{
+          translateX: cursorXSpring,
+          translateY: cursorYSpring,
+          scale: isHovering ? 2.5 : 1,
+        }}
+      />
+
+      {/* Trailing Ring */}
+      <motion.div
+        className="fixed top-0 left-0 w-8 h-8 border border-indigo-400 dark:border-indigo-300 rounded-full pointer-events-none z-[9998] opacity-50"
+        style={{
+          translateX: cursorX,
+          translateY: cursorY,
+          x: -8, // Offset to center around the dot (16px radius difference? No, dot is 16px (w-4), ring is 32px (w-8). Center diff is 8px)
+          y: -8,
           scale: isHovering ? 1.5 : 1,
         }}
         transition={{
-          type: 'spring',
-          stiffness: 500,
-          damping: 28,
-          mass: 0.5,
-        }}
-      />
-
-      {/* Cursor ring */}
-      <motion.div
-        className="fixed top-0 left-0 w-10 h-10 border-2 border-purple-500/50 rounded-full pointer-events-none z-[9998] mix-blend-difference"
-        animate={{
-          x: mousePosition.x - 20,
-          y: mousePosition.y - 20,
-          scale: isHovering ? 1.8 : 1,
-        }}
-        transition={{
-          type: 'spring',
-          stiffness: 150,
-          damping: 20,
-          mass: 0.8,
-        }}
-      />
-
-      {/* Cursor trail */}
-      <motion.div
-        className="fixed top-0 left-0 w-24 h-24 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 rounded-full pointer-events-none z-[9997] blur-xl"
-        animate={{
-          x: mousePosition.x - 48,
-          y: mousePosition.y - 48,
-        }}
-        transition={{
-          type: 'spring',
-          stiffness: 50,
-          damping: 25,
+          type: "spring",
+          damping: 30,
+          stiffness: 200,
+          mass: 0.8
         }}
       />
     </>
   )
 }
+
+export default CustomCursor

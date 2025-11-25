@@ -4,6 +4,8 @@ import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import Image from 'next/image'
 
+import ProfileCard from './ProfileCard'
+
 const About = () => {
   const [ref, inView] = useInView({
     triggerOnce: true,
@@ -14,7 +16,7 @@ const About = () => {
     <section id="about" className="py-20 bg-gradient-to-b from-white via-indigo-50/20 to-white dark:from-gray-900 dark:via-indigo-950/20 dark:to-gray-900 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-      
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           ref={ref}
@@ -45,27 +47,21 @@ const About = () => {
             initial={{ opacity: 0, x: -50 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative"
+            className="flex justify-center"
           >
-            <div className="relative w-full h-96 bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 dark:from-indigo-950 dark:via-purple-950 dark:to-pink-950 rounded-3xl overflow-hidden shadow-2xl">
-              {/* Profile Image */}
-              <div className="absolute inset-0 flex items-center justify-center p-8">
-                <div className="relative w-64 h-64 rounded-full overflow-hidden shadow-2xl animate-float border-4 border-white dark:border-gray-800 ring-4 ring-purple-500/20">
-                  <Image
-                    src="/WhatsApp Image 2025-10-12 at 10.54.21_e1fb74d9.jpg"
-                    alt="Rohit Kumar"
-                    fill
-                    className="object-cover"
-                    quality={75}
-                  />
-                </div>
-              </div>
-              
-              {/* Decorative elements */}
-              <div className="absolute top-4 right-4 w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-2xl opacity-20 animate-pulse-slow rotate-12"></div>
-              <div className="absolute bottom-4 left-4 w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full opacity-20 animate-pulse-slow animation-delay-2000"></div>
-              <div className="absolute top-1/2 left-4 w-8 h-8 bg-gradient-to-br from-pink-500 to-rose-500 rounded-lg opacity-30 animate-pulse-slow animation-delay-4000 -rotate-12"></div>
-            </div>
+            <ProfileCard
+              name="Rohit Kumar"
+              title="Full Stack Developer"
+              handle="rohitkr963"
+              status="Open to Work"
+              contactText="Contact Me"
+              avatarUrl="/rohit-photo.jpg"
+              showUserInfo={true}
+              enableTilt={true}
+              enableMobileTilt={true}
+              onContactClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              className="w-full max-w-md"
+            />
           </motion.div>
 
           {/* Content */}
@@ -78,22 +74,22 @@ const About = () => {
             <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
               Dedicated Developer & Problem Solver
             </h3>
-            
+
             <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-              Hello! I'm Rohit, a dedicated and detail-oriented developer with a strong passion 
-              for creating efficient and user-friendly web applications. I enjoy learning new 
-              technologies, solving complex problems, and building clean, maintainable solutions 
+              Hello! I'm Rohit, a dedicated and detail-oriented developer with a strong passion
+              for creating efficient and user-friendly web applications. I enjoy learning new
+              technologies, solving complex problems, and building clean, maintainable solutions
               that make a real impact.
             </p>
-            
+
             <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-              I have a solid understanding of full-stack development and love working on both 
-              the front-end and back-end to bring ideas to life. I believe in writing clean code, 
+              I have a solid understanding of full-stack development and love working on both
+              the front-end and back-end to bring ideas to life. I believe in writing clean code,
               continuous learning, and staying adaptable in a fast-changing tech world.
             </p>
-            
+
             <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-              Outside of coding, I like exploring new ideas, improving my skills, and finding 
+              Outside of coding, I like exploring new ideas, improving my skills, and finding
               creative ways to make technology more meaningful and accessible.
             </p>
 

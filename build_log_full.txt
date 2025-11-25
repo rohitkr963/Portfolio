@@ -1,0 +1,74 @@
+﻿
+> personal-portfolio@0.1.0 build
+> next build
+
+   Γû▓ Next.js 14.0.0
+   - Environments: .env.local
+   - Experiments (use at your own risk):
+     ┬╖ optimizeCss
+
+   Creating an optimized production build ...
+node.exe :  ΓÜá 
+Custom webpack 
+configuration is 
+detected. When 
+using a custom 
+webpack 
+configuration, the 
+Webpack build 
+worker is disabled 
+by default. To 
+force enable it, 
+set the "experimenta
+l.webpackBuildWorker
+" option to "true". 
+Read more: https://n
+extjs.org/docs/messa
+ges/webpack-build-wo
+rker-opt-out
+At line:1 char:1
++ & "C:\Program File
+s\nodejs/node.exe" "
+C:\Users\nk756\AppDa
+ta\Roaming\ ...
++ ~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~
+    + CategoryInfo  
+            : NotS  
+  pecified: ( ΓÜá   
+  Custom web...-    
+worker-opt-out:    
+String) [], Rem    
+oteException
+    + FullyQualifie 
+   dErrorId : Nati  
+  veCommandError
+ 
+Failed to compile.
+
+./app/layout.js
+Module not found: 
+Can't resolve '@/com
+ponents/CustomCursor
+'
+
+https://nextjs.org/d
+ocs/messages/module-
+not-found
+
+./app/template.js
+Module not found: 
+Can't resolve '@/com
+ponents/PageTransiti
+on'
+
+https://nextjs.org/d
+ocs/messages/module-
+not-found
+
+
+> Build failed 
+because of webpack 
+errors

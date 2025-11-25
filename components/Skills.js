@@ -3,13 +3,13 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import Image from 'next/image'
-import { 
-  FaReact, 
-  FaNodeJs, 
-  FaPython, 
-  FaJs, 
-  FaHtml5, 
-  FaCss3Alt, 
+import {
+  FaReact,
+  FaNodeJs,
+  FaPython,
+  FaJs,
+  FaHtml5,
+  FaCss3Alt,
   FaGitAlt,
   FaGithub,
   FaDocker,
@@ -29,39 +29,39 @@ const Skills = () => {
     {
       title: 'Frontend',
       skills: [
-        { 
-          name: 'HTML5', 
-          icon: FaHtml5, 
+        {
+          name: 'HTML5',
+          icon: FaHtml5,
           color: '#E34F26',
           logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg'
         },
-        { 
-          name: 'CSS3', 
-          icon: FaCss3Alt, 
+        {
+          name: 'CSS3',
+          icon: FaCss3Alt,
           color: '#1572B6',
           logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg'
         },
-        { 
-          name: 'JavaScript', 
-          icon: FaJs, 
+        {
+          name: 'JavaScript',
+          icon: FaJs,
           color: '#F7DF1E',
           logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg'
         },
-        { 
-          name: 'React.js', 
-          icon: FaReact, 
+        {
+          name: 'React.js',
+          icon: FaReact,
           color: '#61DAFB',
           logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg'
         },
-        { 
-          name: 'Tailwind CSS', 
-          icon: SiTailwindcss, 
+        {
+          name: 'Tailwind CSS',
+          icon: SiTailwindcss,
           color: '#06B6D4',
           logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg'
         },
-        { 
-          name: 'Next.js', 
-          icon: SiNextdotjs, 
+        {
+          name: 'Next.js',
+          icon: SiNextdotjs,
           color: '#000000',
           logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg'
         },
@@ -70,27 +70,27 @@ const Skills = () => {
     {
       title: 'Backend & Databases',
       skills: [
-        { 
-          name: 'Node.js', 
-          icon: FaNodeJs, 
+        {
+          name: 'Node.js',
+          icon: FaNodeJs,
           color: '#339933',
           logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg'
         },
-        { 
-          name: 'Express.js', 
-          icon: SiExpress, 
+        {
+          name: 'Express.js',
+          icon: SiExpress,
           color: '#000000',
           logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg'
         },
-        { 
-          name: 'MongoDB', 
-          icon: SiMongodb, 
+        {
+          name: 'MongoDB',
+          icon: SiMongodb,
           color: '#47A248',
           logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg'
         },
-        { 
-          name: 'MySQL', 
-          icon: FaDatabase, 
+        {
+          name: 'MySQL',
+          icon: FaDatabase,
           color: '#4479A1',
           logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg'
         },
@@ -99,39 +99,39 @@ const Skills = () => {
     {
       title: 'Tools & Platforms',
       skills: [
-        { 
-          name: 'Git', 
-          icon: FaGitAlt, 
+        {
+          name: 'Git',
+          icon: FaGitAlt,
           color: '#F05032',
           logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg'
         },
-        { 
-          name: 'GitHub', 
-          icon: FaGithub, 
+        {
+          name: 'GitHub',
+          icon: FaGithub,
           color: '#181717',
           logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg'
         },
-        { 
-          name: 'Postman', 
-          icon: SiPostman, 
+        {
+          name: 'Postman',
+          icon: SiPostman,
           color: '#FF6C37',
           logo: 'https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg'
         },
-        { 
-          name: 'VS Code', 
-          icon: FaAws, 
+        {
+          name: 'VS Code',
+          icon: FaAws,
           color: '#007ACC',
           logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg'
         },
-        { 
-          name: 'Docker', 
-          icon: FaDocker, 
+        {
+          name: 'Docker',
+          icon: FaDocker,
           color: '#2496ED',
           logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg'
         },
-        { 
-          name: 'Vercel', 
-          icon: FaAws, 
+        {
+          name: 'Vercel',
+          icon: FaAws,
           color: '#000000',
           logo: 'https://assets.vercel.com/image/upload/v1588805858/repositories/vercel/logo.png'
         },
@@ -143,7 +143,7 @@ const Skills = () => {
     <section id="skills" className="py-20 bg-gradient-to-b from-white via-purple-50/20 to-white dark:from-gray-900 dark:via-purple-950/20 dark:to-gray-900 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-      
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           ref={ref}
@@ -187,7 +187,7 @@ const Skills = () => {
                 <h3 className="text-2xl font-bold gradient-text mb-8 text-center">
                   {category.title}
                 </h3>
-                
+
                 <div className="grid grid-cols-2 gap-4">
                   {category.skills.map((skill, skillIndex) => (
                     <motion.div
@@ -201,45 +201,51 @@ const Skills = () => {
                         boxShadow: '0 4px 6px rgba(0, 0, 0, 0.05)',
                       }}
                     >
-                      {/* Colored glow on hover */}
-                      <div 
-                        className="absolute inset-0 opacity-0 group-hover/skill:opacity-20 transition-opacity duration-300 blur-xl"
-                        style={{ backgroundColor: skill.color }}
-                      ></div>
-                      
-                      {/* Technology Logo */}
-                      <motion.div
-                        className="relative z-10 w-16 h-16 flex items-center justify-center"
-                        whileHover={{ rotate: [0, -10, 10, 0] }}
-                        transition={{ duration: 0.5 }}
+                      {/* Floating Container */}
+                      <div
+                        className="flex flex-col items-center space-y-3 w-full animate-float"
+                        style={{ animationDelay: `${Math.random() * 5}s` }}
                       >
-                        <div className="relative w-full h-full">
-                          <Image
-                            src={skill.logo}
-                            alt={skill.name}
-                            width={64}
-                            height={64}
-                            className="object-contain drop-shadow-lg group-hover/skill:drop-shadow-2xl transition-all duration-300"
-                            unoptimized
-                          />
-                        </div>
-                      </motion.div>
-                      
-                      {/* Skill Name */}
-                      <span 
-                        className="relative z-10 text-gray-900 dark:text-white font-bold text-sm text-center"
-                        style={{ 
-                          textShadow: '0 2px 4px rgba(0,0,0,0.1)'
-                        }}
-                      >
-                        {skill.name}
-                      </span>
-                      
-                      {/* Bottom accent line */}
-                      <motion.div 
-                        className="absolute bottom-0 left-0 right-0 h-1 opacity-0 group-hover/skill:opacity-100 transition-opacity"
-                        style={{ backgroundColor: skill.color }}
-                      />
+                        {/* Colored glow on hover */}
+                        <div
+                          className="absolute inset-0 opacity-0 group-hover/skill:opacity-20 transition-opacity duration-300 blur-xl"
+                          style={{ backgroundColor: skill.color }}
+                        ></div>
+
+                        {/* Technology Logo */}
+                        <motion.div
+                          className="relative z-10 w-16 h-16 flex items-center justify-center"
+                          whileHover={{ rotate: [0, -10, 10, 0] }}
+                          transition={{ duration: 0.5 }}
+                        >
+                          <div className="relative w-full h-full">
+                            <Image
+                              src={skill.logo}
+                              alt={skill.name}
+                              width={64}
+                              height={64}
+                              className="object-contain drop-shadow-lg group-hover/skill:drop-shadow-2xl transition-all duration-300"
+                              unoptimized
+                            />
+                          </div>
+                        </motion.div>
+
+                        {/* Skill Name */}
+                        <span
+                          className="relative z-10 text-gray-900 dark:text-white font-bold text-sm text-center"
+                          style={{
+                            textShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                          }}
+                        >
+                          {skill.name}
+                        </span>
+
+                        {/* Bottom accent line */}
+                        <motion.div
+                          className="absolute bottom-0 left-0 right-0 h-1 opacity-0 group-hover/skill:opacity-100 transition-opacity"
+                          style={{ backgroundColor: skill.color }}
+                        />
+                      </div>
                     </motion.div>
                   ))}
                 </div>
@@ -261,7 +267,7 @@ const Skills = () => {
           <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-10">
             Additional <span className="gradient-text">Skills</span>
           </h3>
-          
+
           <div className="flex flex-wrap justify-center gap-3">
             {[
               'Express.js',

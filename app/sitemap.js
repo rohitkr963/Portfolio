@@ -1,23 +1,28 @@
-// Dynamic sitemap generation for better SEO
 export default function sitemap() {
-  const baseUrl = 'https://rohitkr963.vercel.app' // Update with your actual domain
-
-  const routes = [
-    '',
-    '#about',
-    '#skills',
-    '#projects',
-    '#experience',
-    '#education',
-    '#achievements',
-    '#certificates',
-    '#contact',
-  ].map((route) => ({
-    url: `${baseUrl}${route}`,
-    lastModified: new Date().toISOString(),
-    changeFrequency: 'weekly',
-    priority: route === '' ? 1.0 : 0.8,
-  }))
-
-  return routes
+  return [
+    {
+      url: 'https://rohitkr963.vercel.app',
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 1,
+    },
+    {
+      url: 'https://rohitkr963.vercel.app/#about',
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://rohitkr963.vercel.app/#projects',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://rohitkr963.vercel.app/#contact',
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.5,
+    },
+  ]
 }
