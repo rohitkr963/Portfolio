@@ -1,9 +1,19 @@
-import { Inter } from 'next/font/google'
+import { Syne, DM_Sans } from 'next/font/google'
 import './globals.css'
 import SplashCursor from '@/components/SplashCursor'
 
-const inter = Inter({
+const syne = Syne({
   subsets: ['latin'],
+  variable: '--font-syne',
+  weight: ['400', '500', '600', '700', '800'],
+  display: 'swap',
+  preload: true,
+})
+
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  variable: '--font-dm-sans',
+  weight: ['300', '400', '500', '600', '700'],
   display: 'swap',
   preload: true,
 })
@@ -69,8 +79,13 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={`${inter.className} bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300`}>
+    <html
+      lang="en"
+      className={`scroll-smooth ${syne.variable} ${dmSans.variable}`}
+    >
+      <body
+        className="font-body bg-void text-[var(--text-primary)] antialiased transition-colors duration-300"
+      >
         <SplashCursor />
         {children}
       </body>
