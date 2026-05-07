@@ -54,13 +54,18 @@ const About = () => {
               title="Full Stack Developer"
               handle="rohitkr963"
               status="Open to Work"
-              contactText="Contact Me"
+              contactText="Let's Work Together"
               avatarUrl="/rohit-photo.jpg"
               showUserInfo={true}
-              enableTilt={true}
-              enableMobileTilt={true}
+              tagline="Building digital experiences with clean code & creative design"
+              socialLinks={{
+                github: "https://github.com/rohitkr963",
+                linkedin: "https://linkedin.com/in/rohitkr963",
+                twitter: "https://twitter.com/rohitkr963",
+                email: "rohit@example.com"
+              }}
               onContactClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-              className="w-full max-w-md"
+              className="w-full"
             />
           </motion.div>
 

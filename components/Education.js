@@ -68,7 +68,7 @@ const Education = () => {
     <section id="education" className="py-20 bg-gradient-to-b from-white via-green-50/20 to-white dark:from-gray-900 dark:via-green-950/20 dark:to-gray-900 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-      
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           ref={ref}
@@ -106,7 +106,7 @@ const Education = () => {
               {/* Gradient overlay with glow effect */}
               <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 via-emerald-500/10 to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-green-400/20 to-emerald-400/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-              
+
               <div className="relative z-10">
                 {/* Header with Icon */}
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-6">
@@ -118,7 +118,7 @@ const Education = () => {
                     >
                       <FaGraduationCap className="text-3xl text-white" />
                     </motion.div>
-                    
+
                     <div className="flex-1">
                       <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
                         {edu.degree}
@@ -126,7 +126,7 @@ const Education = () => {
                       <p className="text-xl text-green-600 dark:text-green-400 font-semibold mb-3">
                         {edu.field}
                       </p>
-                      
+
                       <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
                         <div className="flex items-center space-x-2">
                           <FaUniversity className="text-green-500" />

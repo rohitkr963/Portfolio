@@ -28,37 +28,40 @@ a {
   }
 }
 
-/* Custom scrollbar */
+/* ── Premium Enterprise Scrollbar ── */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 4px;
+  background: linear-gradient(180deg, #7c3aed, #a855f7, #ec4899);
+  border-radius: 99px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: linear-gradient(180deg, #6d28d9, #9333ea, #db2777);
 }
 
 /* Dark mode scrollbar */
-@media (prefers-color-scheme: dark) {
-  ::-webkit-scrollbar-track {
-    background: #1f1f1f;
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background: #555;
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    background: #777;
-  }
+.dark ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #5b21b6, #7c3aed, #be185d);
+}
+
+/* ── Text Selection ── */
+::selection {
+  background: rgba(139, 92, 246, 0.35);
+  color: inherit;
+}
+
+/* ── Enterprise Focus Ring ── */
+:focus-visible {
+  outline: 2px solid rgba(139, 92, 246, 0.7);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 /* Smooth animations */

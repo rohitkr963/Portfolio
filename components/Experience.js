@@ -2,180 +2,253 @@
 
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { FaBriefcase, FaGraduationCap, FaCalendarAlt, FaMapMarkerAlt } from 'react-icons/fa'
+import {
+  FaBriefcase,
+  FaCalendarAlt,
+  FaMapMarkerAlt,
+  FaCheckCircle,
+  FaCode,
+  FaArrowRight,
+  FaBuilding,
+} from 'react-icons/fa'
+import { HiSparkles, HiLightningBolt } from 'react-icons/hi'
+
+const experiences = [
+  {
+    id: 1,
+    type: 'work',
+    title: 'Junior Software Engineer Trainee',
+    company: 'Mobiloitte Technologies',
+    location: 'Delhi, India',
+    period: 'Mar 2026 – Present',
+    status: 'current',
+    statusLabel: '🟢 Currently Working',
+    color: 'from-violet-600 via-purple-600 to-indigo-600',
+    colorSoft: 'from-violet-50 to-indigo-50',
+    colorSoftDark: 'from-violet-950/30 to-indigo-950/30',
+    borderColor: 'border-violet-200 dark:border-violet-800',
+    badgeColor: 'bg-violet-100 dark:bg-violet-900/40 text-violet-700 dark:text-violet-300',
+    dotColor: 'from-violet-600 to-indigo-600',
+    description:
+      'Working as a Junior Software Engineer Trainee at Mobiloitte Technologies, contributing to enterprise-scale backend systems using Node.js and Express.js. Involved in debugging, optimizing, and deploying production-grade REST APIs.',
+    achievements: [
+      'Developed scalable REST APIs using Node.js and Express.js for enterprise applications',
+      'Debugged production issues and optimized backend performance, reducing API response time',
+      'Gained hands-on experience with modern technologies, version control, and deployment workflows',
+    ],
+    technologies: ['Node.js', 'Express.js', 'REST APIs', 'Git', 'Docker', 'Postman', 'Vercel'],
+  },
+  {
+    id: 2,
+    type: 'work',
+    title: 'Software Engineering Intern',
+    company: 'Fraylon Technologies',
+    location: 'Hyderabad, India',
+    period: 'Jan 2026 – Present',
+    status: 'current',
+    statusLabel: '🟢 Currently Working',
+    color: 'from-rose-500 via-pink-500 to-fuchsia-600',
+    colorSoft: 'from-rose-50 to-pink-50',
+    colorSoftDark: 'from-rose-950/30 to-pink-950/30',
+    borderColor: 'border-pink-200 dark:border-pink-800',
+    badgeColor: 'bg-pink-100 dark:bg-pink-900/40 text-pink-700 dark:text-pink-300',
+    dotColor: 'from-rose-500 to-fuchsia-600',
+    description:
+      'Remote Software Engineering Intern at Fraylon Technologies, contributing to full-stack feature development. Responsible for building responsive UI components, integrating REST APIs, and ensuring release stability through code reviews and testing.',
+    achievements: [
+      'Developed and enhanced application features based on business and client requirements',
+      'Implemented clean and responsive UI components to improve user experience',
+      'Integrated REST APIs and managed data flow between frontend and backend systems',
+      'Performed code reviews, bug fixing, and functionality testing for stable releases',
+    ],
+    technologies: ['React.js', 'Node.js', 'REST APIs', 'JavaScript', 'HTML', 'CSS', 'Git', 'GitHub'],
+  },
+]
+
+const cardVariants = {
+  hidden: (i) => ({ opacity: 0, x: i % 2 === 0 ? -60 : 60, y: 20 }),
+  visible: (i) => ({
+    opacity: 1,
+    x: 0,
+    y: 0,
+    transition: { duration: 0.7, delay: i * 0.25, ease: 'easeOut' },
+  }),
+}
 
 const Experience = () => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  })
-
-  const experiences = [
-    {
-      type: 'work',
-      title: 'Full Stack Development Intern',
-      company: 'Internselite',
-      location: 'Remote',
-      period: 'May 2025 - July 2025',
-      description: 'Contributed to full-stack web development projects using React.js, Node.js, and MongoDB. Developed responsive, user-friendly UIs and integrated RESTful APIs with backend services.',
-      achievements: [
-        'Participated in weekly Agile sprints, collaborating with mentors to deliver 6+ features',
-        'Improved code maintainability by 30% by applying clean code principles and Git workflows',
-        'Developed responsive, user-friendly UIs and integrated RESTful APIs with backend services',
-        'Contributed to multiple full-stack web development projects'
-      ],
-      technologies: ['React.js', 'Node.js', 'MongoDB', 'RESTful APIs', 'Git', 'Agile']
-    },
-    {
-      type: 'work',
-      title: 'Full Stack Development Intern',
-      company: 'Alpha Intern',
-      location: 'offline',
-      period: '3 month',
-      description: 'Working on full-stack development projects, building modern web applications and enhancing technical skills.',
-      achievements: [
-        'Developing full-stack web applications',
-        'Learning and implementing best practices in web development',
-        'Collaborating with team members on various projects'
-      ],
-      technologies: ['React', 'Node.js', 'JavaScript', 'HTML', 'CSS']
-    },
-    {
-      type: 'work',
-      title: 'AI/ML Training Program',
-      company: 'Xplore Company',
-      location: 'offline',
-      period: '1 Month',
-      description: 'Completed intensive AI/ML training program covering machine learning fundamentals, algorithms, and practical applications. The program also included comprehensive aptitude training to enhance problem-solving and analytical skills.',
-      achievements: [
-        'Gained hands-on experience with AI/ML algorithms and frameworks',
-        'Completed aptitude training covering logical reasoning and quantitative analysis',
-        'Applied machine learning concepts to real-world problem scenarios',
-        'Enhanced analytical and problem-solving capabilities'
-      ],
-      technologies: ['Python', 'Machine Learning', 'AI', 'Data Analysis', 'Aptitude Training']
-    }
-  ]
-
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.08 })
 
   return (
-    <section id="experience" className="py-20 bg-gradient-to-b from-white via-pink-50/20 to-white dark:from-gray-900 dark:via-pink-950/20 dark:to-gray-900 relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-      
+    <section
+      id="experience"
+      className="py-24 bg-gradient-to-b from-white via-violet-50/20 to-white dark:from-gray-950 dark:via-violet-950/10 dark:to-gray-950 relative overflow-hidden"
+    >
+      {/* Ambient background blobs */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute -top-32 -left-32 w-[500px] h-[500px] bg-violet-400/10 rounded-full blur-3xl" />
+        <div className="absolute -bottom-32 -right-32 w-[400px] h-[400px] bg-pink-400/10 rounded-full blur-3xl" />
+      </div>
+
+      {/* Subtle grid */}
+      <div className="absolute inset-0 bg-grid-pattern opacity-[0.03]" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* ── Section Header ── */}
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.7 }}
+          className="text-center mb-20"
         >
           <motion.div
-            initial={{ scale: 0 }}
-            animate={inView ? { scale: 1 } : {}}
-            transition={{ duration: 0.5, type: "spring" }}
-            className="inline-block px-4 py-2 rounded-full bg-pink-100 dark:bg-pink-900/30 border border-pink-200 dark:border-pink-800 mb-4"
+            initial={{ scale: 0, rotate: -10 }}
+            animate={inView ? { scale: 1, rotate: 0 } : {}}
+            transition={{ duration: 0.5, type: 'spring', stiffness: 200 }}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-violet-100 to-indigo-100 dark:from-violet-900/30 dark:to-indigo-900/30 border border-violet-200 dark:border-violet-800 mb-6 shadow-sm"
           >
-            <span className="text-sm font-semibold gradient-text">💼 Career Journey</span>
+            <HiSparkles className="text-violet-600 dark:text-violet-400" />
+            <span className="text-sm font-bold gradient-text tracking-wide">Career Journey</span>
           </motion.div>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-            Work <span className="gradient-text">Experience</span>
+
+          <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-5 tracking-tight">
+            Work{' '}
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600">
+              Experience
+            </span>
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            My professional journey building impactful web applications
+          <p className="text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
+            Real-world engineering experience — building scalable products, shipping features, and growing with industry-leading teams.
           </p>
         </motion.div>
 
+        {/* ── Timeline ── */}
         <div className="relative">
-          {/* Timeline line */}
-          <div className="absolute left-4 md:left-1/2 transform md:-translate-x-0.5 top-0 bottom-0 w-1 bg-gradient-to-b from-indigo-200 via-purple-200 to-pink-200 dark:from-indigo-900 dark:via-purple-900 dark:to-pink-900 rounded-full"></div>
+          {/* Vertical line */}
+          <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-violet-400 via-purple-400 to-pink-400 dark:from-violet-700 dark:via-purple-700 dark:to-pink-700 rounded-full md:-translate-x-0.5" />
 
-          <div className="space-y-12">
-            {experiences.map((item, index) => (
+          <div className="space-y-16">
+            {experiences.map((exp, index) => (
               <motion.div
-                key={`${item.type}-${index}`}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                animate={inView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                className={`relative flex items-center ${
+                key={exp.id}
+                custom={index}
+                variants={cardVariants}
+                initial="hidden"
+                animate={inView ? 'visible' : 'hidden'}
+                className={`relative flex items-start ${
                   index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
                 }`}
               >
-                {/* Timeline dot */}
-                <div className="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-full border-4 border-white dark:border-gray-900 z-10 shadow-lg shadow-purple-500/50"></div>
-
-                {/* Content */}
-                <div className={`ml-12 md:ml-0 md:w-1/2 ${
-                  index % 2 === 0 ? 'md:pr-8' : 'md:pl-8'
-                }`}>
+                {/* ── Timeline Node ── */}
+                <div className="absolute left-6 md:left-1/2 -translate-x-1/2 z-20 flex flex-col items-center">
                   <motion.div
-                    whileHover={{ scale: 1.05, y: -10 }}
-                    className="group relative bg-gradient-to-br from-white via-indigo-50/30 to-purple-50/30 dark:from-gray-900 dark:via-indigo-950/30 dark:to-purple-950/30 rounded-3xl p-8 shadow-2xl hover:shadow-purple-500/30 dark:hover:shadow-purple-500/20 transition-all duration-500 border-2 border-indigo-100 dark:border-indigo-900 overflow-hidden"
+                    initial={{ scale: 0 }}
+                    animate={inView ? { scale: 1 } : {}}
+                    transition={{ delay: index * 0.25 + 0.15, type: 'spring', stiffness: 300 }}
+                    className={`w-10 h-10 rounded-full bg-gradient-to-br ${exp.dotColor} border-4 border-white dark:border-gray-950 shadow-xl flex items-center justify-center`}
                   >
-                    {/* Gradient overlay with glow effect */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                    
-                    {/* Header */}
-                    <div className="relative z-10 flex items-start space-x-4 mb-4">
-                      <div className="p-4 rounded-2xl bg-gradient-to-br from-indigo-100 to-purple-100 dark:from-indigo-900/50 dark:to-purple-900/50 shadow-lg">
-                        <FaBriefcase className="text-2xl bg-gradient-to-br from-indigo-600 to-purple-600 bg-clip-text text-transparent" />
-                      </div>
-                      
-                      <div className="flex-1">
-                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
-                          {item.title}
-                        </h3>
-                        <p className="text-lg text-primary-600 dark:text-primary-400 font-semibold mb-2">
-                          {item.company || item.institution}
-                        </p>
-                        
-                        <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-4">
-                          <div className="flex items-center space-x-1">
-                            <FaMapMarkerAlt />
-                            <span>{item.location}</span>
-                          </div>
-                          <div className="flex items-center space-x-1">
-                            <FaCalendarAlt />
-                            <span>{item.period}</span>
-                          </div>
+                    <FaBriefcase className="text-white text-sm" />
+                  </motion.div>
+                </div>
+
+                {/* ── Card ── */}
+                <div
+                  className={`ml-16 md:ml-0 md:w-[46%] ${
+                    index % 2 === 0 ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8'
+                  }`}
+                >
+                  <motion.div
+                    whileHover={{ y: -6, scale: 1.015 }}
+                    transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                    className={`group relative rounded-3xl p-7 border-2 ${exp.borderColor} bg-gradient-to-br ${exp.colorSoft} dark:${exp.colorSoftDark} dark:bg-gray-900 shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden`}
+                  >
+                    {/* Glow overlay on hover */}
+                    <div
+                      className={`absolute inset-0 bg-gradient-to-br ${exp.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500 rounded-3xl pointer-events-none`}
+                    />
+                    <div className="absolute -top-20 -right-20 w-48 h-48 bg-gradient-to-br from-white/20 to-transparent rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+
+                    {/* ── Header row ── */}
+                    <div className="relative z-10 flex items-start justify-between gap-3 mb-5">
+                      <div className="flex items-start gap-4">
+                        {/* Company icon */}
+                        <div
+                          className={`p-3 rounded-2xl bg-gradient-to-br ${exp.color} shadow-lg flex-shrink-0`}
+                        >
+                          <FaBuilding className="text-white text-lg" />
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-extrabold text-gray-900 dark:text-white leading-snug">
+                            {exp.title}
+                          </h3>
+                          <p className={`text-sm font-bold mt-0.5 bg-clip-text text-transparent bg-gradient-to-r ${exp.color}`}>
+                            {exp.company}
+                          </p>
                         </div>
                       </div>
+
+                      {/* Status badge */}
+                      {exp.status === 'current' && (
+                        <span className="flex-shrink-0 text-xs font-semibold px-3 py-1.5 rounded-full bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800 animate-pulse">
+                          Active
+                        </span>
+                      )}
                     </div>
 
-                    {/* Description */}
-                    <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
-                      {item.description}
+                    {/* ── Meta info ── */}
+                    <div className="relative z-10 flex flex-wrap gap-4 text-sm text-gray-500 dark:text-gray-400 mb-5">
+                      <span className="flex items-center gap-1.5">
+                        <FaMapMarkerAlt className="text-violet-500" />
+                        {exp.location}
+                      </span>
+                      <span className="flex items-center gap-1.5">
+                        <FaCalendarAlt className="text-violet-500" />
+                        {exp.period}
+                      </span>
+                      <span className="text-xs text-gray-400 dark:text-gray-500 italic">
+                        {exp.statusLabel}
+                      </span>
+                    </div>
+
+                    {/* ── Description ── */}
+                    <p className="relative z-10 text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-5">
+                      {exp.description}
                     </p>
 
-                    {/* Achievements */}
-                    <div className="mb-6">
-                      <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-3 uppercase tracking-wide">
-                        Key Achievements
+                    {/* ── Achievements ── */}
+                    <div className="relative z-10 mb-5">
+                      <h4 className="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-widest mb-3 flex items-center gap-2">
+                        <HiLightningBolt className="text-violet-500" />
+                        Key Contributions
                       </h4>
                       <ul className="space-y-2">
-                        {item.achievements.map((achievement, achievementIndex) => (
-                          <li key={achievementIndex} className="flex items-start space-x-2 text-sm text-gray-600 dark:text-gray-400">
-                            <span className="text-primary-600 dark:text-primary-400 mt-1">•</span>
+                        {exp.achievements.map((achievement, i) => (
+                          <motion.li
+                            key={i}
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={inView ? { opacity: 1, x: 0 } : {}}
+                            transition={{ delay: index * 0.25 + i * 0.08 + 0.3 }}
+                            className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-400"
+                          >
+                            <FaCheckCircle className="text-violet-500 dark:text-violet-400 mt-0.5 flex-shrink-0 text-xs" />
                             <span>{achievement}</span>
-                          </li>
+                          </motion.li>
                         ))}
                       </ul>
                     </div>
 
-                    {/* Technologies */}
-                    <div>
-                      <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-3 uppercase tracking-wide flex items-center gap-2">
-                        <span className="h-1 w-8 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full"></span>
-                        Technologies Used
+                    {/* ── Technologies ── */}
+                    <div className="relative z-10">
+                      <h4 className="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-widest mb-3 flex items-center gap-2">
+                        <FaCode className="text-violet-500" />
+                        Tech Stack
                       </h4>
                       <div className="flex flex-wrap gap-2">
-                        {item.technologies.map((tech, techIndex) => (
+                        {exp.technologies.map((tech, i) => (
                           <motion.span
-                            key={techIndex}
+                            key={i}
                             whileHover={{ scale: 1.1, y: -2 }}
-                            className="px-4 py-2 bg-gradient-to-r from-indigo-100 via-purple-100 to-pink-100 dark:from-indigo-900/40 dark:via-purple-900/40 dark:to-pink-900/40 text-indigo-700 dark:text-indigo-300 rounded-full text-sm font-semibold shadow-md hover:shadow-lg border border-indigo-200 dark:border-indigo-800 transition-all duration-300 cursor-pointer"
+                            className={`px-3 py-1.5 text-xs font-semibold rounded-full ${exp.badgeColor} border ${exp.borderColor} shadow-sm hover:shadow-md transition-all duration-200 cursor-default`}
                           >
                             {tech}
                           </motion.span>
@@ -189,41 +262,41 @@ const Experience = () => {
           </div>
         </div>
 
-        {/* Skills Summary */}
+        {/* ── Professional Stats Banner ── */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-16 bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-lg"
+          className="mt-24 relative rounded-3xl overflow-hidden"
         >
-          <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
-            Professional Summary
-          </h3>
-          
-          <div className="grid md:grid-cols-3 gap-8 text-center">
-            <div>
-              <div className="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2">
-                8.56
-              </div>
-              <div className="text-gray-600 dark:text-gray-400">
-                CGPA
-              </div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2">
-                3+
-              </div>
-              <div className="text-gray-600 dark:text-gray-400">
-                Major Projects
-              </div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2">
-                15+
-              </div>
-              <div className="text-gray-600 dark:text-gray-400">
-                Technologies
-              </div>
+          {/* Gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-violet-600 via-purple-700 to-pink-600 opacity-90" />
+          <div className="absolute inset-0 bg-grid-pattern opacity-10" />
+
+          <div className="relative z-10 p-10 md:p-14">
+            <p className="text-center text-white/70 text-sm font-semibold uppercase tracking-widest mb-8">
+              Professional at a Glance
+            </p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+              {[
+                { value: '2+', label: 'Active Roles', icon: '💼' },
+                { value: '8.56', label: 'CGPA', icon: '🎓' },
+                { value: '15+', label: 'Technologies', icon: '⚡' },
+                { value: '3+', label: 'Major Projects', icon: '🚀' },
+              ].map((stat, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={inView ? { opacity: 1, scale: 1 } : {}}
+                  transition={{ delay: 0.8 + i * 0.1, type: 'spring' }}
+                  whileHover={{ scale: 1.05 }}
+                  className="flex flex-col items-center gap-1"
+                >
+                  <span className="text-3xl mb-1">{stat.icon}</span>
+                  <div className="text-4xl font-black text-white tracking-tight">{stat.value}</div>
+                  <div className="text-white/70 text-sm font-medium">{stat.label}</div>
+                </motion.div>
+              ))}
             </div>
           </div>
         </motion.div>
