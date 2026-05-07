@@ -1,461 +1,461 @@
 'use client'
 
-import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { FaGithub, FaExternalLinkAlt, FaReact, FaNodeJs, FaDatabase, FaFileAlt } from 'react-icons/fa'
-import { SiNextdotjs, SiTypescript, SiTailwindcss, SiMongodb, SiPostgresql } from 'react-icons/si'
+import { FaGithub, FaExternalLinkAlt, FaStar, FaFilter, FaCode, FaFileAlt } from 'react-icons/fa'
+import { HiSparkles, HiLightningBolt } from 'react-icons/hi'
 import Image from 'next/image'
 import CaseStudyModal from './CaseStudyModal'
 import TiltCard from './TiltCard'
+import { VARIANTS } from '@/lib/design-tokens'
 
+// ── Fetch GitHub stars ──
+function useGitHubStars(repo) {
+  const [stars, setStars] = useState(null)
+  useEffect(() => {
+    fetch(`https://api.github.com/repos/rohitkr963/${repo}`)
+      .then(r => r.json())
+      .then(d => setStars(d.stargazers_count ?? 0))
+      .catch(() => setStars(0))
+  }, [repo])
+  return stars
+}
+
+// ── Filter tabs ──
+const FILTERS = ['All', 'Full-Stack', 'Frontend', 'API']
+
+const mainProjects = [
+  {
+    id: 1,
+    title: 'Doctor-Connect',
+    subtitle: 'Telemedicine Platform',
+    description: 'Real-time doctor-patient consultation platform with video calls, appointment scheduling, digital health records, and an AI chatbot for instant health queries.',
+    image: '/Doctor-Connect.png',
+    repo: 'Doctor-Connect',
+    github: 'https://github.com/rohitkr963/Doctor-Connect',
+    live: 'https://doctor-connect-fronted.vercel.app/',
+    tags: ['Full-Stack', 'API'],
+    accent: '#00F5FF',
+    technologies: ['React', 'Node.js', 'MongoDB', 'WebRTC', 'Socket.io', 'JWT'],
+    highlights: ['Real-time video via WebRTC', 'JWT auth', 'AI chatbot integration', 'Deployed on Vercel'],
+    caseStudy: {
+      problem: 'Traditional healthcare systems lack accessibility and real-time communication between doctors and patients.',
+      solution: 'Built a comprehensive telemedicine platform with real-time chat, voice, and video calling using WebRTC and Socket.io, along with JWT-based secure authentication and an AI-powered chatbot.',
+      features: ['Real-time video and voice calling with WebRTC', 'Instant messaging system with Socket.io', 'Secure JWT-based authentication', 'AI chatbot for health queries', 'Digital health record management', 'Appointment scheduling', 'Responsive design', 'Dark mode support'],
+      results: ['Successfully deployed on Vercel with 99.9% uptime', 'Reduced patient wait time for consultations', 'Improved healthcare accessibility for remote areas', 'Secured sensitive health data'],
+      challenges: ['Implemented real-time communication with minimal latency', 'Managed complex state for concurrent video calls', 'Integrated AI chatbot with medical knowledge base'],
+    }
+  },
+  {
+    id: 2,
+    title: 'Rider-Go',
+    subtitle: 'Ride Booking Platform',
+    description: 'Full-stack ride booking system with dual user/captain dashboards, role-based JWT auth, 20+ documented RESTful APIs, and real-time ride tracking.',
+    image: '/Rider-go.png',
+    repo: 'Rider-Go-Web',
+    github: 'https://github.com/rohitkr963/Rider-Go-Web',
+    live: 'https://rider-go-web.vercel.app',
+    tags: ['Full-Stack', 'API'],
+    accent: '#7C3AED',
+    technologies: ['React', 'Node.js', 'MongoDB', 'TypeScript', 'Socket.io', 'JWT'],
+    highlights: ['Dual user/captain dashboard', '20+ REST APIs', 'Role-based access control', 'TypeScript'],
+    caseStudy: {
+      problem: 'Creating a reliable and secure ride-booking platform handling both user and driver interfaces with complex booking logic.',
+      solution: 'Developed a full-stack MERN application with TypeScript for type safety, JWT role-based auth, and 20+ RESTful APIs.',
+      features: ['Dual interface for riders and drivers', 'JWT-based secure authentication', 'Real-time ride tracking', '20+ documented RESTful APIs', 'Driver availability status', 'TypeScript for code quality'],
+      results: ['Built scalable architecture for concurrent bookings', 'Implemented secure authentication', 'Comprehensive API documentation', 'Responsive design across devices'],
+      challenges: ['Complex state management for real-time updates', 'Role-based protected routes with JWT', 'Scalable REST API architecture', 'Type safety with TypeScript'],
+    }
+  },
+]
+
+const additionalProjects = [
+  {
+    id: 3,
+    title: 'Airbnb Clone',
+    description: 'Full-stack Airbnb clone with listings, booking logic, and JWT auth. 15+ API endpoints with Node.js/Express backend.',
+    repo: 'AirBnb-project',
+    github: 'https://github.com/rohitkr963/AirBnb-project',
+    live: 'https://airbnb-project-cma4.onrender.com',
+    tags: ['Full-Stack'],
+    accent: '#EC4899',
+    technologies: ['React', 'Node.js', 'MongoDB', 'PostgreSQL'],
+  },
+  {
+    id: 4,
+    title: 'TodoList Major Project',
+    description: 'Comprehensive task management app with advanced features, authentication, and responsive design.',
+    repo: 'TodoList-Major-Project',
+    github: 'https://github.com/rohitkr963/TodoList-Major-Project',
+    live: '#',
+    tags: ['Full-Stack'],
+    accent: '#7C3AED',
+    technologies: ['React', 'Node.js', 'MongoDB'],
+  },
+  {
+    id: 5,
+    title: 'Video Calling App',
+    description: 'Real-time P2P video calling with WebRTC integration — video/audio communication, screen sharing, and chat.',
+    repo: 'Video-Calling-App-fronted',
+    github: 'https://github.com/rohitkr963/Video-Calling-App-fronted',
+    live: '#',
+    tags: ['Frontend', 'API'],
+    accent: '#00F5FF',
+    technologies: ['React', 'WebRTC', 'Socket.io', 'Node.js'],
+  },
+  {
+    id: 6,
+    title: 'Hangman Game',
+    description: 'Interactive word guessing game with dynamic word selection, score tracking, and smooth UI animations.',
+    repo: 'Hangman-Game',
+    github: 'https://github.com/rohitkr963/Hangman-Game',
+    live: '#',
+    tags: ['Frontend'],
+    accent: '#F59E0B',
+    technologies: ['React', 'JavaScript'],
+  },
+]
+
+// ── Featured Project Card ──
+function FeaturedCard({ project, index, inView, onCaseStudy }) {
+  const stars = useGitHubStars(project.repo)
+  const [hovered, setHovered] = useState(false)
+
+  return (
+    <TiltCard className="group relative rounded-3xl overflow-hidden border border-white/8 hover:border-white/15 transition-all duration-500"
+      style={{ boxShadow: hovered ? `0 20px 60px ${project.accent}20` : '0 8px 32px rgba(0,0,0,0.4)' }}
+    >
+      <motion.div
+        variants={VARIANTS.fadeUp}
+        custom={index * 0.15}
+        initial="hidden"
+        animate={inView ? 'visible' : 'hidden'}
+        onHoverStart={() => setHovered(true)}
+        onHoverEnd={() => setHovered(false)}
+        className="h-full flex flex-col"
+        style={{ background: 'rgba(5,8,16,0.85)' }}
+      >
+        {/* Image section */}
+        <div className="relative overflow-hidden h-52 flex-shrink-0">
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050810] via-[#050810]/40 to-transparent z-10" />
+
+          {/* Animated gradient background as fallback/overlay */}
+          <div
+            className="absolute inset-0 opacity-30 transition-opacity duration-500"
+            style={{
+              background: `linear-gradient(135deg, ${project.accent}40, #7C3AED30)`,
+              opacity: hovered ? 0.5 : 0.25,
+            }}
+          />
+
+          <Image
+            src={project.image}
+            alt={project.title}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-700"
+          />
+
+          {/* Badges */}
+          <div className="absolute top-4 left-4 z-20 flex gap-2">
+            <span
+              className="px-2.5 py-1 rounded-full text-[10px] font-bold backdrop-blur-md border"
+              style={{
+                background: `${project.accent}20`,
+                borderColor: `${project.accent}40`,
+                color: project.accent,
+              }}
+            >
+              Featured
+            </span>
+          </div>
+
+          {/* Stars badge */}
+          <div className="absolute top-4 right-4 z-20">
+            <div className="flex items-center gap-1 glass rounded-full px-2.5 py-1 border border-white/10">
+              <FaStar className="text-yellow-400 text-[10px]" />
+              <span className="text-[10px] text-white/70 font-mono">
+                {stars === null ? '…' : stars}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="p-6 flex flex-col flex-grow">
+          <div className="mb-4">
+            <p className="text-xs font-semibold mb-1" style={{ color: project.accent }}>{project.subtitle}</p>
+            <h3
+              className="text-xl font-bold text-white/90 mb-2"
+              style={{ fontFamily: 'var(--font-syne, Syne, sans-serif)' }}
+            >{project.title}</h3>
+            <p className="text-sm text-white/50 leading-relaxed font-body">{project.description}</p>
+          </div>
+
+          {/* Highlights */}
+          <div className="mb-4 space-y-1.5">
+            {project.highlights.map((h, i) => (
+              <div key={i} className="flex items-center gap-2 text-xs text-white/45 font-body">
+                <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: project.accent }} />
+                {h}
+              </div>
+            ))}
+          </div>
+
+          {/* Tech tags */}
+          <div className="flex flex-wrap gap-1.5 mb-5">
+            {project.technologies.map(tech => (
+              <span
+                key={tech}
+                className="px-2.5 py-1 rounded-lg text-[11px] font-semibold font-body border"
+                style={{
+                  background: `${project.accent}10`,
+                  borderColor: `${project.accent}25`,
+                  color: `${project.accent}cc`,
+                }}
+              >{tech}</span>
+            ))}
+          </div>
+
+          {/* Actions */}
+          <div className="flex gap-2 mt-auto pt-4 border-t border-white/6">
+            <motion.a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold glass border border-white/10 hover:border-white/20 text-white/70 hover:text-white transition-all"
+            >
+              <FaGithub size={14} />
+              Code
+            </motion.a>
+            <motion.a
+              href={project.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold text-[#050810] transition-all"
+              style={{ background: `linear-gradient(135deg, ${project.accent}, ${project.accent}99)` }}
+            >
+              <FaExternalLinkAlt size={11} />
+              Live Demo
+            </motion.a>
+            <motion.button
+              onClick={() => onCaseStudy(project)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              title="Case Study"
+              className="px-3 py-2.5 rounded-xl glass border border-white/10 hover:border-white/20 text-white/50 hover:text-white transition-all"
+            >
+              <FaFileAlt size={13} />
+            </motion.button>
+          </div>
+        </div>
+      </motion.div>
+    </TiltCard>
+  )
+}
+
+// ── Additional Project Card ──
+function AdditionalCard({ project, inView }) {
+  const stars = useGitHubStars(project.repo)
+  return (
+    <motion.div
+      variants={VARIANTS.scaleIn}
+      initial="hidden"
+      animate={inView ? 'visible' : 'hidden'}
+      whileHover={{ scale: 1.03, y: -4 }}
+      className="group glass rounded-2xl overflow-hidden border border-white/8 hover:border-white/15 transition-all duration-400 flex flex-col"
+      style={{ boxShadow: '0 4px 20px rgba(0,0,0,0.3)' }}
+    >
+      {/* Color bar top */}
+      <div className="h-1 w-full" style={{ background: `linear-gradient(90deg, ${project.accent}, transparent)` }} />
+
+      <div className="p-5 flex flex-col flex-grow">
+        <div className="flex items-start justify-between mb-3">
+          <h4
+            className="text-base font-bold text-white/85 group-hover:text-white transition-colors"
+            style={{ fontFamily: 'var(--font-syne, Syne, sans-serif)' }}
+          >{project.title}</h4>
+          <div className="flex items-center gap-1 flex-shrink-0 ml-2">
+            <FaStar className="text-yellow-400 text-[10px]" />
+            <span className="text-[10px] text-white/40 font-mono">{stars === null ? '…' : stars}</span>
+          </div>
+        </div>
+
+        <p className="text-xs text-white/45 leading-relaxed font-body flex-grow mb-4">{project.description}</p>
+
+        <div className="flex flex-wrap gap-1 mb-4">
+          {project.technologies.slice(0, 3).map(t => (
+            <span key={t} className="px-2 py-0.5 rounded text-[10px] font-semibold font-body"
+              style={{ background: `${project.accent}12`, color: `${project.accent}bb` }}>
+              {t}
+            </span>
+          ))}
+        </div>
+
+        <div className="flex gap-2 mt-auto">
+          <a href={project.github} target="_blank" rel="noopener noreferrer"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-semibold glass border border-white/8 hover:border-white/20 text-white/60 hover:text-white transition-all">
+            <FaGithub size={12} /> Code
+          </a>
+          {project.live !== '#' && (
+            <a href={project.live} target="_blank" rel="noopener noreferrer"
+              className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-semibold text-[#050810] transition-all"
+              style={{ background: project.accent }}>
+              <FaExternalLinkAlt size={10} /> Live
+            </a>
+          )}
+        </div>
+      </div>
+    </motion.div>
+  )
+}
+
+// ── Main Projects Component ──
 const Projects = () => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  })
-
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.05 })
+  const [activeFilter, setActiveFilter] = useState('All')
   const [selectedProject, setSelectedProject] = useState(null)
   const [isCaseStudyOpen, setIsCaseStudyOpen] = useState(false)
 
-  const openCaseStudy = (project) => {
-    setSelectedProject(project)
-    setIsCaseStudyOpen(true)
-  }
-
-  const closeCaseStudy = () => {
-    setIsCaseStudyOpen(false)
-    setTimeout(() => setSelectedProject(null), 300)
-  }
-
-  const mainProjects = [
-    {
-      id: 1,
-      title: 'Doctor-Connect',
-      description: 'A full-stack telemedicine platform enabling real-time doctor-patient chat, appointment scheduling, and digital health record management. Features real-time chat, voice, and video calling, JWT-based authentication, and an AI chatbot for instant health queries.',
-      image: '/Doctor-Connect.png',
-      technologies: [
-        { name: 'React', icon: FaReact, color: 'text-blue-400' },
-        { name: 'Node.js', icon: FaNodeJs, color: 'text-green-600' },
-        { name: 'MongoDB', icon: SiMongodb, color: 'text-green-500' },
-        { name: 'Tailwind CSS', icon: SiTailwindcss, color: 'text-cyan-500' },
-      ],
-      github: 'https://github.com/rohitkr963/Doctor-Connect',
-      live: 'https://doctor-connect-fronted.vercel.app/',
-      caseStudy: {
-        problem: 'Traditional healthcare systems lack accessibility and real-time communication between doctors and patients. Patients often struggle to get timely consultations, and managing health records manually is inefficient and error-prone.',
-        solution: 'Built a comprehensive telemedicine platform that bridges the gap between patients and healthcare providers. Implemented real-time chat, voice, and video calling using WebRTC and Socket.io, along with JWT-based secure authentication and an AI-powered chatbot for instant health queries.',
-        features: [
-          'Real-time video and voice calling with WebRTC',
-          'Instant messaging system with Socket.io',
-          'Secure JWT-based authentication',
-          'AI chatbot for preliminary health queries',
-          'Digital health record management',
-          'Appointment scheduling system',
-          'Responsive design for all devices',
-          'Dark mode support'
-        ],
-        results: [
-          'Successfully deployed on Vercel with 99.9% uptime',
-          'Reduced patient wait time for consultations by enabling instant online connections',
-          'Improved healthcare accessibility for remote areas',
-          'Secured sensitive health data with industry-standard encryption'
-        ],
-        challenges: [
-          'Implemented real-time communication with minimal latency using WebRTC peer connections',
-          'Managed complex state for multiple concurrent video calls',
-          'Ensured HIPAA-compliant data handling and privacy',
-          'Optimized performance for low-bandwidth connections',
-          'Integrated AI chatbot with medical knowledge base'
-        ]
-      }
-    },
-    {
-      id: 2,
-      title: 'Rider-Go',
-      description: 'A full-stack ride booking system for users and captains built with MERN stack. Features secure user & captain login with role-based protected routes using JWT. Includes 20+ documented RESTful APIs with Express.js for comprehensive ride booking management.',
-      image: '/Rider-go.png',
-      technologies: [
-        { name: 'React', icon: FaReact, color: 'text-blue-400' },
-        { name: 'Node.js', icon: FaNodeJs, color: 'text-green-600' },
-        { name: 'MongoDB', icon: SiMongodb, color: 'text-green-500' },
-        { name: 'TypeScript', icon: SiTypescript, color: 'text-blue-500' },
-      ],
-      github: 'https://github.com/rohitkr963/Rider-Go-Web',
-      live: 'https://rider-go-web.vercel.app',
-      caseStudy: {
-        problem: 'Creating a reliable and secure ride-booking platform that handles both user and driver interfaces with complex booking logic, real-time updates, and secure authentication was a significant technical challenge.',
-        solution: 'Developed a full-stack MERN application with TypeScript for type safety. Implemented role-based authentication using JWT, created 20+ RESTful APIs for comprehensive ride management, and built separate interfaces for users and captains with real-time ride tracking.',
-        features: [
-          'Dual interface for riders and drivers',
-          'JWT-based secure authentication with role-based access',
-          'Real-time ride tracking and updates',
-          '20+ documented RESTful APIs',
-          'Ride booking and management system',
-          'Driver availability status',
-          'Rating and review system',
-          'Payment integration ready',
-          'TypeScript for enhanced code quality'
-        ],
-        results: [
-          'Built scalable architecture supporting multiple concurrent bookings',
-          'Implemented secure authentication protecting user and driver data',
-          'Created comprehensive API documentation for future development',
-          'Successfully deployed with responsive design across all devices'
-        ],
-        challenges: [
-          'Designed complex state management for real-time ride updates',
-          'Implemented role-based protected routes with JWT',
-          'Built scalable REST API architecture with proper error handling',
-          'Ensured type safety across the application using TypeScript',
-          'Optimized database queries for fast ride matching'
-        ]
-      }
-    }
-  ]
-
-  const additionalProjects = [
-    {
-      id: 3,
-      title: 'Airbnb Clone',
-      description: 'A full-stack Airbnb clone with listings, booking logic, and user authentication using JWT. Frontend built with React.js using React Hooks and modular components. Backend powered by Node.js and Express.js with 15+ API endpoints.',
-      image: '',
-      technologies: [
-        { name: 'React', icon: FaReact, color: 'text-blue-400' },
-        { name: 'Node.js', icon: FaNodeJs, color: 'text-green-600' },
-        { name: 'MongoDB', icon: SiMongodb, color: 'text-green-500' },
-        { name: 'PostgreSQL', icon: SiPostgresql, color: 'text-blue-600' },
-      ],
-      github: 'https://github.com/rohitkr963/AirBnb-project',
-      live: 'https://airbnb-project-cma4.onrender.com'
-    },
-    {
-      id: 4,
-      title: 'TodoList Major Project',
-      description: 'A comprehensive task management application with advanced features for organizing and tracking daily tasks. Built with modern web technologies and responsive design.',
-      image: '',
-      technologies: [
-        { name: 'React', icon: FaReact, color: 'text-blue-400' },
-        { name: 'Node.js', icon: FaNodeJs, color: 'text-green-600' },
-        { name: 'MongoDB', icon: SiMongodb, color: 'text-green-500' },
-      ],
-      github: 'https://github.com/rohitkr963/TodoList-Major-Project',
-      live: '#'
-    },
-    {
-      id: 5,
-      title: 'Video Calling App',
-      description: 'A real-time video calling application with WebRTC integration. Features peer-to-peer video/audio communication, screen sharing, and chat functionality.',
-      image: '',
-      technologies: [
-        { name: 'React', icon: FaReact, color: 'text-blue-400' },
-        { name: 'Node.js', icon: FaNodeJs, color: 'text-green-600' },
-        { name: 'MongoDB', icon: SiMongodb, color: 'text-green-500' },
-      ],
-      github: 'https://github.com/rohitkr963/Video-Calling-App-fronted',
-      live: '#'
-    },
-    {
-      id: 6,
-      title: 'Hangman Game',
-      description: 'An interactive word guessing game built with JavaScript. Features dynamic word selection, score tracking, and engaging UI with smooth animations.',
-      image: '',
-      technologies: [
-        { name: 'React', icon: FaReact, color: 'text-blue-400' },
-      ],
-      github: 'https://github.com/rohitkr963/Hangman-Game',
-      live: '#'
-    }
-  ]
+  const filteredAdditional = activeFilter === 'All'
+    ? additionalProjects
+    : additionalProjects.filter(p => p.tags.includes(activeFilter))
 
   return (
-    <section id="projects" className="py-20 bg-gradient-to-b from-white via-indigo-50/20 to-white dark:from-gray-900 dark:via-indigo-950/20 dark:to-gray-900 relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+    <section
+      id="projects"
+      ref={ref}
+      className="py-24 relative overflow-hidden"
+      style={{ background: 'linear-gradient(to bottom, #050810, #060a15, #050810)' }}
+    >
+      <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] pointer-events-none" />
+      <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-[#00F5FF]/6 blur-3xl rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+        {/* Header */}
         <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 50 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
+          variants={VARIANTS.fadeUp}
+          initial="hidden"
+          animate={inView ? 'visible' : 'hidden'}
           className="text-center mb-16"
         >
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={inView ? { scale: 1 } : {}}
-            transition={{ duration: 0.5, type: "spring" }}
-            className="inline-block px-4 py-2 rounded-full bg-indigo-100 dark:bg-indigo-900/30 border border-indigo-200 dark:border-indigo-800 mb-4"
+          <div className="inline-flex items-center gap-2 glass rounded-full px-5 py-2.5 border border-white/10 mb-6">
+            <HiSparkles className="text-[#00F5FF]" />
+            <span className="text-sm font-semibold gradient-text tracking-wide">Portfolio Showcase</span>
+          </div>
+          <h2
+            className="text-4xl md:text-5xl font-extrabold mb-4"
+            style={{ fontFamily: 'var(--font-syne, Syne, sans-serif)' }}
           >
-            <span className="text-sm font-semibold gradient-text">🚀 Portfolio Showcase</span>
-          </motion.div>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-            My <span className="gradient-text">Projects</span>
+            <span className="text-white/90">My </span>
+            <span className="gradient-text">Projects</span>
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            Explore my journey through code - from ideas to implementation
+          <p className="text-white/45 max-w-xl mx-auto font-body">
+            From ideas to production — explore my full-stack engineering journey
           </p>
         </motion.div>
 
-        {/* Main Projects */}
-        <div className="mb-20">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-center mb-12"
-          >
-            <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">
-              Featured <span className="gradient-text">Work</span>
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400">
-              Highlighting my best full-stack applications
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 gap-8 mb-16">
-            {mainProjects.map((project, index) => (
-              <TiltCard
-                key={project.id}
-                className="group relative bg-white dark:bg-gray-800 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700 h-full"
-              >
-                <motion.div
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.8, delay: index * 0.2 }}
-                  className="h-full flex flex-col"
-                >
-                  {/* Image Section */}
-                  <div className="relative overflow-hidden h-64 shrink-0">
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" />
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                    <div className="absolute top-4 right-4 z-20">
-                      <span className="px-3 py-1 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md rounded-full text-xs font-semibold text-primary-600 dark:text-primary-400 shadow-lg border border-white/20">
-                        Featured
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-8 flex flex-col flex-grow relative">
-                    {/* Glow effect */}
-                    <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary-500/10 rounded-full blur-3xl group-hover:bg-primary-500/20 transition-all duration-500" />
-
-                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-                      {project.title}
-                    </h3>
-
-                    <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed flex-grow">
-                      {project.description}
-                    </p>
-
-                    {/* Tech Stack */}
-                    <div className="flex flex-wrap gap-2 mb-8">
-                      {project.technologies.map((tech) => (
-                        <span
-                          key={tech.name}
-                          className="flex items-center space-x-1.5 px-3 py-1.5 bg-gray-50 dark:bg-gray-700/50 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 border border-gray-100 dark:border-gray-700"
-                        >
-                          <tech.icon className={`${tech.color}`} />
-                          <span>{tech.name}</span>
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* Actions */}
-                    <div className="flex items-center gap-4 mt-auto pt-6 border-t border-gray-100 dark:border-gray-700">
-                      <motion.a
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 flex items-center justify-center space-x-2 px-4 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-xl font-semibold hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors"
-                      >
-                        <FaGithub className="text-lg" />
-                        <span>Source Code</span>
-                      </motion.a>
-                      <motion.a
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        href={project.live}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 flex items-center justify-center space-x-2 px-4 py-3 bg-primary-600 text-white rounded-xl font-semibold hover:bg-primary-700 transition-colors shadow-lg shadow-primary-600/20"
-                      >
-                        <FaExternalLinkAlt className="text-sm" />
-                        <span>Live Demo</span>
-                      </motion.a>
-                      <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => openCaseStudy(project)}
-                        className="p-3 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                        title="View Case Study"
-                      >
-                        <FaFileAlt className="text-lg" />
-                      </motion.button>
-                    </div>
-                  </div>
-                </motion.div>
-              </TiltCard>
-            ))}
-          </div>
-        </div>
-
-        {/* Additional Projects */}
-        <div className="mb-20">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-center mb-12"
-          >
-            <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">
-              More <span className="gradient-text">Projects</span>
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400">
-              Explore my other interesting projects and experiments
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {additionalProjects.map((project, index) => (
-              <TiltCard
-                key={project.id}
-                className="group relative bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700 h-full"
-              >
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={inView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-                  className="h-full flex flex-col"
-                >
-                  {/* Gradient overlay on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary-500/0 to-purple-500/0 group-hover:from-primary-500/5 group-hover:to-purple-500/5 transition-all duration-300 z-10 pointer-events-none"></div>
-
-                  {/* Image Section */}
-                  <div className="relative overflow-hidden h-48 shrink-0">
-                    <div className="relative w-full h-full bg-gradient-to-br from-primary-100 via-purple-100 to-pink-100 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700">
-                      {project.image ? (
-                        <Image
-                          src={project.image}
-                          alt={project.title}
-                          fill
-                          className="object-cover group-hover:scale-110 transition-transform duration-500"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <div className="text-6xl text-primary-600 dark:text-primary-400 group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
-                            <FaDatabase />
-                          </div>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Top badge */}
-                    <div className="absolute top-3 right-3 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm px-3 py-1 rounded-full shadow-md z-20">
-                      <span className="text-xs font-semibold text-primary-600 dark:text-primary-400">Project</span>
-                    </div>
-                  </div>
-
-                  {/* Content Section */}
-                  <div className="p-6 relative z-20 flex flex-col flex-grow">
-                    <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-                      {project.title}
-                    </h4>
-
-                    <p className="text-gray-600 dark:text-gray-400 mb-4 text-sm leading-relaxed line-clamp-3 flex-grow">
-                      {project.description}
-                    </p>
-
-                    {/* Technologies */}
-                    <div className="flex flex-wrap gap-2 mb-5">
-                      {project.technologies.slice(0, 3).map((tech) => (
-                        <span
-                          key={tech.name}
-                          className="flex items-center space-x-1.5 px-3 py-1.5 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-600 rounded-lg text-xs font-medium border border-gray-200 dark:border-gray-600 hover:border-primary-300 dark:hover:border-primary-600 transition-colors"
-                        >
-                          <tech.icon className={`${tech.color} text-sm`} />
-                          <span className="text-gray-700 dark:text-gray-300">{tech.name}</span>
-                        </span>
-                      ))}
-                      {project.technologies.length > 3 && (
-                        <span className="flex items-center px-3 py-1.5 bg-gray-100 dark:bg-gray-700 rounded-lg text-xs font-medium text-gray-600 dark:text-gray-400">
-                          +{project.technologies.length - 3}
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Action Buttons */}
-                    <div className="flex gap-3 mt-auto">
-                      <motion.a
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 flex items-center justify-center space-x-2 px-4 py-2.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-lg font-medium text-sm hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors shadow-md"
-                      >
-                        <FaGithub className="text-base" />
-                        <span>Code</span>
-                      </motion.a>
-                      {project.live !== '#' && (
-                        <motion.a
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          href={project.live}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-1 flex items-center justify-center space-x-2 px-4 py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium text-sm transition-colors shadow-md"
-                        >
-                          <FaExternalLinkAlt className="text-sm" />
-                          <span>Live</span>
-                        </motion.a>
-                      )}
-                    </div>
-                  </div>
-                </motion.div>
-              </TiltCard>
-            ))}
-          </div>
-        </div>
-
-        {/* View More Button */}
+        {/* ── Featured Projects ── */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="text-center mt-12"
+          variants={VARIANTS.fadeUp}
+          custom={0.1}
+          initial="hidden"
+          animate={inView ? 'visible' : 'hidden'}
+          className="mb-4 flex items-center gap-2"
         >
-          <motion.a
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+          <HiLightningBolt className="text-[#00F5FF]" />
+          <h3 className="text-lg font-bold text-white/70 font-body">Featured Work</h3>
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 gap-6 mb-16">
+          {mainProjects.map((project, i) => (
+            <FeaturedCard
+              key={project.id}
+              project={project}
+              index={i}
+              inView={inView}
+              onCaseStudy={(p) => { setSelectedProject(p); setIsCaseStudyOpen(true) }}
+            />
+          ))}
+        </div>
+
+        {/* ── Filter + More Projects ── */}
+        <motion.div
+          variants={VARIANTS.fadeUp}
+          custom={0.4}
+          initial="hidden"
+          animate={inView ? 'visible' : 'hidden'}
+          className="flex flex-col sm:flex-row sm:items-center gap-4 mb-8"
+        >
+          <div className="flex items-center gap-2">
+            <HiLightningBolt className="text-[#7C3AED]" />
+            <h3 className="text-lg font-bold text-white/70 font-body">More Projects</h3>
+          </div>
+          {/* Filter pills */}
+          <div className="flex items-center gap-2 sm:ml-auto">
+            <FaFilter className="text-white/30 text-xs" />
+            {FILTERS.map(f => (
+              <button
+                key={f}
+                onClick={() => setActiveFilter(f)}
+                className="px-3 py-1.5 rounded-lg text-xs font-semibold font-body transition-all duration-200"
+                style={{
+                  background: activeFilter === f ? 'rgba(124,58,237,0.2)' : 'rgba(255,255,255,0.04)',
+                  border: activeFilter === f ? '1px solid rgba(124,58,237,0.5)' : '1px solid rgba(255,255,255,0.08)',
+                  color: activeFilter === f ? '#7C3AED' : 'rgba(255,255,255,0.4)',
+                }}
+              >{f}</button>
+            ))}
+          </div>
+        </motion.div>
+
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeFilter}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3 }}
+            className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10"
+          >
+            {filteredAdditional.map(project => (
+              <AdditionalCard key={project.id} project={project} inView={inView} />
+            ))}
+          </motion.div>
+        </AnimatePresence>
+
+        {/* GitHub CTA */}
+        <motion.div
+          variants={VARIANTS.fadeUp}
+          custom={0.7}
+          initial="hidden"
+          animate={inView ? 'visible' : 'hidden'}
+          className="text-center"
+        >
+          <a
             href="https://github.com/rohitkr963"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition-colors duration-200"
+            className="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl glass border border-white/10 hover:border-[#00F5FF]/30 text-white/70 hover:text-white font-semibold transition-all duration-300 text-sm font-body"
           >
-            <FaGithub className="mr-2" />
-            View More on GitHub
-          </motion.a>
+            <FaGithub size={18} />
+            View All Projects on GitHub
+          </a>
         </motion.div>
       </div>
 
-      {/* Case Study Modal */}
       <CaseStudyModal
         project={selectedProject}
         isOpen={isCaseStudyOpen}
-        onClose={closeCaseStudy}
+        onClose={() => { setIsCaseStudyOpen(false); setTimeout(() => setSelectedProject(null), 300) }}
       />
     </section>
   )
 }
 
 export default Projects
-

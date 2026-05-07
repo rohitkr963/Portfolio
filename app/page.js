@@ -8,6 +8,8 @@ import Hero from '../components/Hero'
 import Navbar from '../components/Navbar'
 import SmoothScroll from '../components/SmoothScroll'
 import ScrollProgress from '../components/ScrollProgress'
+import HireMeBanner from '../components/HireMeBanner'
+import TerminalEaster from '../components/TerminalEaster'
 
 // Lazy load components below the fold with dynamic imports
 const About = dynamic(() => import('../components/About'), {
@@ -67,10 +69,10 @@ const WhatsAppButton = dynamic(() => import('../components/WhatsAppButton'), {
 // Loading skeleton component
 function ComponentSkeleton({ height = 'h-screen' }) {
   return (
-    <div className={`${height} w-full bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 animate-pulse flex items-center justify-center`}>
+    <div className={`${height} w-full bg-[#050810] animate-pulse flex items-center justify-center`}>
       <div className="text-center">
-        <div className="w-16 h-16 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-        <p className="text-gray-600 dark:text-gray-400">Loading...</p>
+        <div className="w-12 h-12 border-2 border-[#00F5FF] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+        <p className="text-white/40 font-body text-sm">Loading...</p>
       </div>
     </div>
   )
@@ -90,32 +92,27 @@ export default function Home() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 relative overflow-hidden">
+      <div className="min-h-screen flex items-center justify-center bg-[#050810] relative overflow-hidden">
         {/* Animated Background */}
         <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-indigo-400 to-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30 dark:opacity-20 animate-blob"></div>
-          <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30 dark:opacity-20 animate-blob animation-delay-2000"></div>
-          <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-gradient-to-r from-pink-400 to-rose-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30 dark:opacity-20 animate-blob animation-delay-4000"></div>
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#00F5FF] rounded-full mix-blend-screen filter blur-[100px] opacity-10 animate-blob"></div>
+          <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-[#7C3AED] rounded-full mix-blend-screen filter blur-[100px] opacity-10 animate-blob animation-delay-2000"></div>
         </div>
         
         <div className="text-center relative z-10">
           {/* Animated Logo */}
           <div className="mb-8">
-            <div className="relative w-24 h-24 mx-auto">
-              <div className="absolute inset-0 border-4 border-transparent border-t-indigo-600 border-r-purple-600 rounded-full animate-spin"></div>
-              <div className="absolute inset-2 border-4 border-transparent border-t-purple-600 border-r-pink-600 rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1s' }}></div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-3xl font-bold gradient-text">RK</span>
-              </div>
+            <div className="relative w-20 h-20 mx-auto flex items-center justify-center">
+              <div className="absolute inset-0 border-2 border-transparent border-t-[#00F5FF] border-r-[#7C3AED] rounded-full animate-spin"></div>
+              <span className="text-2xl font-bold text-white font-display">RK</span>
             </div>
           </div>
           
           {/* Loading Text */}
-          <h2 className="text-2xl font-bold gradient-text mb-4">Loading Portfolio</h2>
           <div className="flex items-center justify-center space-x-2">
-            <div className="w-3 h-3 bg-indigo-600 rounded-full animate-bounce"></div>
-            <div className="w-3 h-3 bg-purple-600 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-            <div className="w-3 h-3 bg-pink-600 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+            <div className="w-2 h-2 bg-[#00F5FF] rounded-full animate-bounce"></div>
+            <div className="w-2 h-2 bg-[#7C3AED] rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+            <div className="w-2 h-2 bg-[#EC4899] rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
           </div>
         </div>
       </div>
@@ -124,9 +121,11 @@ export default function Home() {
 
   return (
     <SmoothScroll>
-      <main className="min-h-screen bg-white dark:bg-gray-900 relative">
+      <main className="min-h-screen bg-void relative">
         <ScrollProgress />
         <WhatsAppButton />
+        <HireMeBanner />
+        <TerminalEaster />
         <Navbar />
         <Hero />
         <About />

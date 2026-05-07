@@ -1,301 +1,319 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import Image from 'next/image'
-import {
-  FaReact,
-  FaNodeJs,
-  FaPython,
-  FaJs,
-  FaHtml5,
-  FaCss3Alt,
-  FaGitAlt,
-  FaGithub,
-  FaDocker,
-  FaAws,
-  FaFigma,
-  FaDatabase
-} from 'react-icons/fa'
-import { SiNextdotjs, SiTypescript, SiTailwindcss, SiMongodb, SiPostgresql, SiExpress, SiPostman } from 'react-icons/si'
+import { HiSparkles, HiLightningBolt } from 'react-icons/hi'
+import { FaReact, FaNodeJs, FaJs, FaHtml5, FaCss3Alt, FaGitAlt, FaGithub, FaDocker, FaDatabase, FaPython } from 'react-icons/fa'
+import { SiNextdotjs, SiTailwindcss, SiMongodb, SiExpress, SiPostman, SiTypescript } from 'react-icons/si'
+import { VARIANTS } from '@/lib/design-tokens'
 
-const Skills = () => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  })
+// ── Skill data with proficiency ──
+const SKILL_TABS = {
+  Frontend: {
+    color: '#00F5FF',
+    colorDim: 'rgba(0,245,255,0.12)',
+    skills: [
+      { name: 'React.js',      logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg',      level: 90, projects: 4 },
+      { name: 'Next.js',       logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg',    level: 85, projects: 2 },
+      { name: 'JavaScript',    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg', level: 92, projects: 6 },
+      { name: 'TypeScript',    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg', level: 70, projects: 2 },
+      { name: 'Tailwind CSS',  logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg', level: 88, projects: 4 },
+      { name: 'HTML5',         logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg',      level: 95, projects: 6 },
+      { name: 'CSS3',          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg',        level: 90, projects: 6 },
+    ],
+  },
+  Backend: {
+    color: '#7C3AED',
+    colorDim: 'rgba(124,58,237,0.12)',
+    skills: [
+      { name: 'Node.js',    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg',  level: 85, projects: 5 },
+      { name: 'Express.js', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg', level: 83, projects: 5 },
+      { name: 'MongoDB',    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg', level: 80, projects: 4 },
+      { name: 'MySQL',      logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg',    level: 72, projects: 2 },
+      { name: 'REST APIs',  logo: 'https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg',               level: 88, projects: 5 },
+      { name: 'Socket.io',  logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/socketio/socketio-original.svg', level: 75, projects: 2 },
+    ],
+  },
+  DevOps: {
+    color: '#EC4899',
+    colorDim: 'rgba(236,72,153,0.12)',
+    skills: [
+      { name: 'Git',    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg',    level: 88, projects: 6 },
+      { name: 'GitHub', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg', level: 88, projects: 6 },
+      { name: 'Docker', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg', level: 65, projects: 1 },
+      { name: 'Vercel', logo: 'https://assets.vercel.com/image/upload/v1588805858/repositories/vercel/logo.png', level: 85, projects: 4 },
+      { name: 'Render', logo: 'https://cdn.simpleicons.org/render/46E3B7', level: 80, projects: 3 },
+    ],
+  },
+  Tools: {
+    color: '#F59E0B',
+    colorDim: 'rgba(245,158,11,0.12)',
+    skills: [
+      { name: 'Postman',  logo: 'https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg', level: 85, projects: 5 },
+      { name: 'VS Code',  logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg', level: 95, projects: 6 },
+      { name: 'Python',   logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg', level: 60, projects: 1 },
+      { name: 'Figma',    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg',  level: 55, projects: 2 },
+    ],
+  },
+}
 
-  const skillCategories = [
-    {
-      title: 'Frontend',
-      skills: [
-        {
-          name: 'HTML5',
-          icon: FaHtml5,
-          color: '#E34F26',
-          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg'
-        },
-        {
-          name: 'CSS3',
-          icon: FaCss3Alt,
-          color: '#1572B6',
-          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg'
-        },
-        {
-          name: 'JavaScript',
-          icon: FaJs,
-          color: '#F7DF1E',
-          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg'
-        },
-        {
-          name: 'React.js',
-          icon: FaReact,
-          color: '#61DAFB',
-          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg'
-        },
-        {
-          name: 'Tailwind CSS',
-          icon: SiTailwindcss,
-          color: '#06B6D4',
-          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg'
-        },
-        {
-          name: 'Next.js',
-          icon: SiNextdotjs,
-          color: '#000000',
-          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg'
-        },
-      ]
-    },
-    {
-      title: 'Backend & Databases',
-      skills: [
-        {
-          name: 'Node.js',
-          icon: FaNodeJs,
-          color: '#339933',
-          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg'
-        },
-        {
-          name: 'Express.js',
-          icon: SiExpress,
-          color: '#000000',
-          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg'
-        },
-        {
-          name: 'MongoDB',
-          icon: SiMongodb,
-          color: '#47A248',
-          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg'
-        },
-        {
-          name: 'MySQL',
-          icon: FaDatabase,
-          color: '#4479A1',
-          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg'
-        },
-      ]
-    },
-    {
-      title: 'Tools & Platforms',
-      skills: [
-        {
-          name: 'Git',
-          icon: FaGitAlt,
-          color: '#F05032',
-          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg'
-        },
-        {
-          name: 'GitHub',
-          icon: FaGithub,
-          color: '#181717',
-          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg'
-        },
-        {
-          name: 'Postman',
-          icon: SiPostman,
-          color: '#FF6C37',
-          logo: 'https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg'
-        },
-        {
-          name: 'VS Code',
-          icon: FaAws,
-          color: '#007ACC',
-          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg'
-        },
-        {
-          name: 'Docker',
-          icon: FaDocker,
-          color: '#2496ED',
-          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg'
-        },
-        {
-          name: 'Vercel',
-          icon: FaAws,
-          color: '#000000',
-          logo: 'https://assets.vercel.com/image/upload/v1588805858/repositories/vercel/logo.png'
-        },
-      ]
-    }
-  ]
+// ── Proficiency bar ──
+function ProficiencyBar({ level, color, inView }) {
+  return (
+    <div className="mt-2 h-1 rounded-full bg-white/8 overflow-hidden">
+      <motion.div
+        initial={{ width: 0 }}
+        animate={inView ? { width: `${level}%` } : { width: 0 }}
+        transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+        className="h-full rounded-full"
+        style={{ background: `linear-gradient(90deg, ${color}, ${color}88)` }}
+      />
+    </div>
+  )
+}
+
+// ── Skill Card ──
+function SkillCard({ skill, color, colorDim, index, inView }) {
+  const [hovered, setHovered] = useState(false)
+  return (
+    <motion.div
+      variants={VARIANTS.scaleIn}
+      custom={index * 0.05}
+      initial="hidden"
+      animate={inView ? 'visible' : 'hidden'}
+      whileHover={{ scale: 1.06, y: -6 }}
+      onHoverStart={() => setHovered(true)}
+      onHoverEnd={() => setHovered(false)}
+      className="relative glass rounded-2xl p-4 border border-white/8 hover:border-white/20 transition-all duration-300 cursor-default overflow-hidden group"
+    >
+      {/* Glow on hover */}
+      <div
+        className="absolute inset-0 rounded-2xl transition-opacity duration-400"
+        style={{
+          background: `radial-gradient(circle at center, ${color}20 0%, transparent 70%)`,
+          opacity: hovered ? 1 : 0,
+        }}
+      />
+
+      <div className="relative z-10 flex flex-col items-center text-center gap-2">
+        {/* Logo */}
+        <div className="w-12 h-12 flex items-center justify-center">
+          <Image
+            src={skill.logo}
+            alt={skill.name}
+            width={44}
+            height={44}
+            className="object-contain drop-shadow-lg"
+            unoptimized
+          />
+        </div>
+
+        {/* Name */}
+        <p className="text-xs font-semibold text-white/80 font-body">{skill.name}</p>
+
+        {/* Proficiency */}
+        <div className="w-full">
+          <div className="flex justify-between items-center mb-1">
+            <span className="text-[10px] text-white/30 font-body">{skill.projects} projects</span>
+            <span className="text-[10px] font-bold" style={{ color }}>{skill.level}%</span>
+          </div>
+          <ProficiencyBar level={skill.level} color={color} inView={inView} />
+        </div>
+      </div>
+    </motion.div>
+  )
+}
+
+// ── Tech Radar (simplified) ──
+const RADAR_ITEMS = {
+  Adopt:  ['React.js', 'Node.js', 'MongoDB', 'Next.js', 'Tailwind CSS', 'Git', 'REST APIs'],
+  Trial:  ['TypeScript', 'Docker', 'Socket.io', 'WebRTC'],
+  Assess: ['Python', 'GraphQL', 'Redis', 'Kubernetes'],
+  Hold:   ['jQuery', 'PHP'],
+}
+
+function TechRadar({ inView }) {
+  const rings = ['Adopt', 'Trial', 'Assess', 'Hold']
+  const ringColors = ['#00F5FF', '#7C3AED', '#EC4899', '#F59E0B']
 
   return (
-    <section id="skills" className="py-20 bg-gradient-to-b from-white via-purple-50/20 to-white dark:from-gray-900 dark:via-purple-950/20 dark:to-gray-900 relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+    <div className="glass rounded-3xl p-6 border border-white/8 mt-8">
+      <div className="flex items-center gap-2 mb-6">
+        <HiLightningBolt className="text-[#00F5FF]" />
+        <h3
+          className="text-lg font-bold text-white/90"
+          style={{ fontFamily: 'var(--font-syne, Syne, sans-serif)' }}
+        >
+          Tech Radar
+        </h3>
+        <span className="text-xs text-white/35 font-body ml-1">— how I use each technology</span>
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {rings.map((ring, ri) => (
+          <div key={ring}>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="w-2.5 h-2.5 rounded-full" style={{ background: ringColors[ri] }} />
+              <span className="text-xs font-bold text-white/70 uppercase tracking-widest">{ring}</span>
+            </div>
+            <div className="space-y-1.5">
+              {RADAR_ITEMS[ring].map((tech, ti) => (
+                <motion.div
+                  key={tech}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={inView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ delay: ri * 0.1 + ti * 0.05 }}
+                  className="text-xs text-white/50 font-body hover:text-white/80 transition-colors cursor-default flex items-center gap-1.5"
+                >
+                  <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: ringColors[ri] }} />
+                  {tech}
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// ── Main Skills Component ──
+const Skills = () => {
+  const [activeTab, setActiveTab] = useState('Frontend')
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.05 })
+
+  const tabs = Object.keys(SKILL_TABS)
+  const { color, colorDim, skills } = SKILL_TABS[activeTab]
+
+  return (
+    <section
+      id="skills"
+      ref={ref}
+      className="py-24 relative overflow-hidden"
+      style={{ background: 'linear-gradient(to bottom, #050810, #07091a, #050810)' }}
+    >
+      <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] pointer-events-none" />
+      <div className="absolute top-1/3 right-0 w-96 h-96 bg-[#7C3AED]/8 blur-3xl rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+        {/* Header */}
         <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 50 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
+          variants={VARIANTS.fadeUp}
+          initial="hidden"
+          animate={inView ? 'visible' : 'hidden'}
           className="text-center mb-16"
         >
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={inView ? { scale: 1 } : {}}
-            transition={{ duration: 0.5, type: "spring" }}
-            className="inline-block px-4 py-2 rounded-full bg-purple-100 dark:bg-purple-900/30 border border-purple-200 dark:border-purple-800 mb-4"
+          <div className="inline-flex items-center gap-2 glass rounded-full px-5 py-2.5 border border-white/10 mb-6">
+            <HiSparkles className="text-[#00F5FF]" />
+            <span className="text-sm font-semibold gradient-text tracking-wide">Technical Expertise</span>
+          </div>
+          <h2
+            className="text-4xl md:text-5xl font-extrabold mb-4"
+            style={{ fontFamily: 'var(--font-syne, Syne, sans-serif)' }}
           >
-            <span className="text-sm font-semibold gradient-text">⚡ Technical Skills</span>
-          </motion.div>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-            My <span className="gradient-text">Expertise</span>
+            <span className="text-white/90">My </span>
+            <span className="gradient-text">Skills</span>
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+          <p className="text-white/45 max-w-xl mx-auto font-body">
             Technologies and tools I use to craft exceptional digital experiences
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          {skillCategories.map((category, categoryIndex) => (
-            <motion.div
-              key={category.title}
-              initial={{ opacity: 0, y: 50 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: categoryIndex * 0.2 }}
-              whileHover={{ y: -10 }}
-              className="group relative bg-white dark:bg-gray-900 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-800 overflow-hidden"
-            >
-              {/* Gradient background on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 via-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <div className="relative z-10">
-                <div className="flex items-center justify-center mb-8">
-                  <div className="h-1 w-12 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full"></div>
-                </div>
-                <h3 className="text-2xl font-bold gradient-text mb-8 text-center">
-                  {category.title}
-                </h3>
-
-                <div className="grid grid-cols-2 gap-4">
-                  {category.skills.map((skill, skillIndex) => (
-                    <motion.div
-                      key={skill.name}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={inView ? { opacity: 1, scale: 1 } : {}}
-                      transition={{ duration: 0.6, delay: (categoryIndex * 0.2) + (skillIndex * 0.1) }}
-                      whileHover={{ scale: 1.1, y: -8 }}
-                      className="relative flex flex-col items-center space-y-3 p-5 bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-2xl hover:shadow-2xl transition-all duration-300 border border-gray-200 dark:border-gray-700 group/skill cursor-pointer overflow-hidden"
-                      style={{
-                        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.05)',
-                      }}
-                    >
-                      {/* Floating Container */}
-                      <div
-                        className="flex flex-col items-center space-y-3 w-full animate-float"
-                        style={{ animationDelay: `${Math.random() * 5}s` }}
-                      >
-                        {/* Colored glow on hover */}
-                        <div
-                          className="absolute inset-0 opacity-0 group-hover/skill:opacity-20 transition-opacity duration-300 blur-xl"
-                          style={{ backgroundColor: skill.color }}
-                        ></div>
-
-                        {/* Technology Logo */}
-                        <motion.div
-                          className="relative z-10 w-16 h-16 flex items-center justify-center"
-                          whileHover={{ rotate: [0, -10, 10, 0] }}
-                          transition={{ duration: 0.5 }}
-                        >
-                          <div className="relative w-full h-full">
-                            <Image
-                              src={skill.logo}
-                              alt={skill.name}
-                              width={64}
-                              height={64}
-                              className="object-contain drop-shadow-lg group-hover/skill:drop-shadow-2xl transition-all duration-300"
-                              unoptimized
-                            />
-                          </div>
-                        </motion.div>
-
-                        {/* Skill Name */}
-                        <span
-                          className="relative z-10 text-gray-900 dark:text-white font-bold text-sm text-center"
-                          style={{
-                            textShadow: '0 2px 4px rgba(0,0,0,0.1)'
-                          }}
-                        >
-                          {skill.name}
-                        </span>
-
-                        {/* Bottom accent line */}
-                        <motion.div
-                          className="absolute bottom-0 left-0 right-0 h-1 opacity-0 group-hover/skill:opacity-100 transition-opacity"
-                          style={{ backgroundColor: skill.color }}
-                        />
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Additional Skills */}
+        {/* ── Tab Switcher ── */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-20 text-center"
+          variants={VARIANTS.fadeUp}
+          custom={0.1}
+          initial="hidden"
+          animate={inView ? 'visible' : 'hidden'}
+          className="flex flex-wrap justify-center gap-2 mb-10"
         >
-          <div className="inline-block px-4 py-2 rounded-full bg-indigo-100 dark:bg-indigo-900/30 border border-indigo-200 dark:border-indigo-800 mb-6">
-            <span className="text-sm font-semibold gradient-text">🚀 More Technologies</span>
-          </div>
-          <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-10">
-            Additional <span className="gradient-text">Skills</span>
-          </h3>
-
-          <div className="flex flex-wrap justify-center gap-3">
-            {[
-              'Express.js',
-              'Mongoose',
-              'JWT',
-              'Socket.io',
-              'WebRTC',
-              'bcrypt.js',
-              'Vite',
-              'Vercel',
-              'Render',
-              'Responsive Design',
-              'RESTful APIs',
-              'Agile Methodology'
-            ].map((skill, index) => (
-              <motion.span
-                key={skill}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={inView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.5, delay: 0.8 + (index * 0.05) }}
-                whileHover={{ scale: 1.1, y: -3 }}
-                className="px-5 py-2.5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-950/50 dark:to-purple-950/50 text-gray-900 dark:text-white rounded-xl text-sm font-semibold hover:shadow-lg hover:from-indigo-100 hover:to-purple-100 dark:hover:from-indigo-900/50 dark:hover:to-purple-900/50 transition-all duration-300 border border-indigo-200/50 dark:border-indigo-800/50"
+          {tabs.map((tab) => {
+            const isActive = tab === activeTab
+            const tabColor = SKILL_TABS[tab].color
+            return (
+              <motion.button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.96 }}
+                className="relative px-6 py-2.5 rounded-xl text-sm font-semibold font-body transition-all duration-300 overflow-hidden"
+                style={{
+                  background: isActive ? `linear-gradient(135deg, ${tabColor}25, ${tabColor}10)` : 'rgba(255,255,255,0.04)',
+                  border: isActive ? `1px solid ${tabColor}50` : '1px solid rgba(255,255,255,0.08)',
+                  color: isActive ? tabColor : 'rgba(255,255,255,0.45)',
+                  boxShadow: isActive ? `0 0 20px ${tabColor}20` : 'none',
+                }}
               >
-                {skill}
-              </motion.span>
-            ))}
-          </div>
+                {tab}
+                {isActive && (
+                  <motion.div
+                    layoutId="tab-bg"
+                    className="absolute inset-0 rounded-xl"
+                    style={{ background: `${tabColor}08` }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 35 }}
+                  />
+                )}
+              </motion.button>
+            )
+          })}
         </motion.div>
+
+        {/* ── Skills Grid (animated tab switch) ── */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4">
+              {skills.map((skill, i) => (
+                <SkillCard
+                  key={skill.name}
+                  skill={skill}
+                  color={color}
+                  colorDim={colorDim}
+                  index={i}
+                  inView={inView}
+                />
+              ))}
+            </div>
+          </motion.div>
+        </AnimatePresence>
+
+        {/* ── Tech Radar ── */}
+        <TechRadar inView={inView} />
+
+        {/* ── Bottom stats ── */}
+        <motion.div
+          variants={VARIANTS.fadeUp}
+          custom={0.5}
+          initial="hidden"
+          animate={inView ? 'visible' : 'hidden'}
+          className="mt-8 grid grid-cols-3 gap-4"
+        >
+          {[
+            { value: '15+', label: 'Technologies', icon: '⚡' },
+            { value: '500+', label: 'GitHub Commits', icon: '📦' },
+            { value: '3+', label: 'Projects Shipped', icon: '🚀' },
+          ].map((stat) => (
+            <div
+              key={stat.label}
+              className="glass rounded-2xl p-4 border border-white/8 text-center"
+            >
+              <div className="text-xl mb-1">{stat.icon}</div>
+              <div
+                className="text-2xl font-extrabold gradient-text mb-0.5"
+                style={{ fontFamily: 'var(--font-syne, Syne, sans-serif)' }}
+              >{stat.value}</div>
+              <div className="text-xs text-white/35 font-body">{stat.label}</div>
+            </div>
+          ))}
+        </motion.div>
+
       </div>
     </section>
   )

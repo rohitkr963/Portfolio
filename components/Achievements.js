@@ -3,15 +3,49 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { FaTrophy, FaMedal, FaRocket, FaCode, FaStar, FaAward } from 'react-icons/fa'
+import { FaTrophy, FaMedal, FaGithub, FaAward, FaStar } from 'react-icons/fa'
+import { HiSparkles } from 'react-icons/hi'
 import Image from 'next/image'
 import ImageModal from './ImageModal'
+import { VARIANTS } from '@/lib/design-tokens'
+
+// ── CSS Confetti Effect ──
+function CSSConfetti({ isActive }) {
+  if (!isActive) return null
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl z-0">
+      {[...Array(30)].map((_, i) => {
+        const colors = ['#00F5FF', '#7C3AED', '#EC4899', '#F59E0B']
+        const color = colors[Math.floor(Math.random() * colors.length)]
+        const left = `${Math.random() * 100}%`
+        const delay = `${Math.random() * 2}s`
+        const duration = `${1 + Math.random() * 2}s`
+
+        return (
+          <div
+            key={i}
+            className="absolute top-[-10px] w-2 h-2"
+            style={{
+              left,
+              backgroundColor: color,
+              animation: `confetti-fall ${duration} ease-in ${delay} forwards`,
+              transform: `rotate(${Math.random() * 360}deg)`,
+            }}
+          />
+        )
+      })}
+      <style jsx>{`
+        @keyframes confetti-fall {
+          0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+          100% { transform: translateY(300px) rotate(720deg); opacity: 0; }
+        }
+      `}</style>
+    </div>
+  )
+}
 
 const Achievements = () => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  })
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 })
 
   const [selectedImage, setSelectedImage] = useState(null)
   const [imageTitle, setImageTitle] = useState('')
@@ -23,14 +57,6 @@ const Achievements = () => {
     setIsImageModalOpen(true)
   }
 
-  const closeImageModal = () => {
-    setIsImageModalOpen(false)
-    setTimeout(() => {
-      setSelectedImage(null)
-      setImageTitle('')
-    }, 300)
-  }
-
   const achievements = [
     {
       title: 'Alpha Hack 2.0 - Gold Medalist',
@@ -39,8 +65,7 @@ const Achievements = () => {
       description: 'Won Gold Medal in Alpha Hack 2.0 National Hackathon competing against top developers from across the country.',
       icon: FaTrophy,
       image: '/hackthon.jpg',
-      color: 'from-yellow-500 to-orange-500',
-      bgColor: 'from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20',
+      accent: '#F59E0B',
       highlights: [
         'Competed against 500+ participants nationwide',
         'Built innovative solution in 48-hour timeframe',
@@ -50,179 +75,186 @@ const Achievements = () => {
   ]
 
   return (
-    <section id="achievements" className="py-20 bg-gradient-to-b from-white via-yellow-50/20 to-white dark:from-gray-900 dark:via-yellow-950/20 dark:to-gray-900 relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-      
+    <section
+      id="achievements"
+      ref={ref}
+      className="py-24 relative overflow-hidden"
+      style={{ background: 'linear-gradient(to bottom, #050810, #0a0814, #050810)' }}
+    >
+      <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] pointer-events-none" />
+      <div className="absolute top-1/2 right-1/4 w-[400px] h-[400px] bg-[#F59E0B]/5 blur-[100px] rounded-full pointer-events-none" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        {/* Header */}
         <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 50 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
+          variants={VARIANTS.fadeUp}
+          initial="hidden"
+          animate={inView ? 'visible' : 'hidden'}
           className="text-center mb-16"
         >
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={inView ? { scale: 1 } : {}}
-            transition={{ duration: 0.5, type: "spring" }}
-            className="inline-block px-4 py-2 rounded-full bg-gradient-to-r from-yellow-100 via-orange-100 to-amber-100 dark:from-yellow-900/30 dark:via-orange-900/30 dark:to-amber-900/30 border border-yellow-200 dark:border-yellow-800 mb-4"
+          <div className="inline-flex items-center gap-2 glass rounded-full px-5 py-2.5 border border-white/10 mb-6">
+            <HiSparkles className="text-[#F59E0B]" />
+            <span className="text-sm font-semibold gradient-text tracking-wide" style={{ background: 'linear-gradient(to right, #F59E0B, #EC4899)', WebkitBackgroundClip: 'text', color: 'transparent' }}>
+              Milestones & Awards
+            </span>
+          </div>
+          <h2
+            className="text-4xl md:text-5xl font-extrabold mb-4"
+            style={{ fontFamily: 'var(--font-syne, Syne, sans-serif)' }}
           >
-            <span className="text-sm font-semibold gradient-text">🏆 Milestones & Awards</span>
-          </motion.div>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-            Key <span className="gradient-text">Achievements</span>
+            <span className="text-white/90">Key </span>
+            <span className="gradient-text" style={{ background: 'linear-gradient(to right, #F59E0B, #EC4899)', WebkitBackgroundClip: 'text', color: 'transparent' }}>
+              Achievements
+            </span>
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            Celebrating success through innovation, dedication, and continuous growth
+          <p className="text-white/45 max-w-xl mx-auto font-body">
+            Celebrating success through innovation, dedication, and continuous growth.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
+        <div className="grid lg:grid-cols-2 gap-8 mb-12">
+          
+          {/* Main Achievement Card */}
           {achievements.map((achievement, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: index * 0.1 }}
-              whileHover={{ scale: 1.03, y: -8 }}
-              className="group relative rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500"
+              whileHover={{ scale: 1.02, y: -4 }}
+              className="group relative glass rounded-3xl overflow-hidden border border-white/8 hover:border-[#F59E0B]/30 transition-all duration-500 shadow-2xl"
+              style={{ boxShadow: '0 10px 40px rgba(0,0,0,0.5)' }}
             >
-              <div className={`absolute inset-0 bg-gradient-to-br ${achievement.bgColor} opacity-90`}></div>
+              <CSSConfetti isActive={inView} />
+
+              {/* Background gradient hint */}
+              <div className="absolute inset-0 bg-gradient-to-br from-[#F59E0B]/10 to-transparent opacity-50 z-0" />
               
-              {/* Card Content */}
-              <div className="relative z-10 p-8">
-                {/* Header with Icon/Image */}
+              <div className="relative z-10 p-8 flex flex-col h-full">
                 <div className="flex items-start justify-between mb-6">
                   <div className="flex-1">
                     <div className="flex items-center gap-4 mb-4">
-                      <motion.div
-                        whileHover={{ rotate: 360, scale: 1.2 }}
-                        transition={{ duration: 0.6 }}
-                        className={`p-4 rounded-2xl bg-gradient-to-br ${achievement.color} shadow-xl`}
-                      >
-                        <achievement.icon className="text-3xl text-white" />
-                      </motion.div>
-                      
+                      <div className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg"
+                        style={{ background: 'linear-gradient(135deg, #F59E0B, #EC4899)' }}>
+                        <achievement.icon className="text-2xl text-white" />
+                      </div>
                       <div>
-                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
+                        <h3 className="text-2xl font-bold text-white/90 mb-1 font-display">
                           {achievement.title}
                         </h3>
-                        <p className={`text-lg font-semibold bg-gradient-to-r ${achievement.color} bg-clip-text text-transparent`}>
+                        <p className="text-sm font-semibold text-[#F59E0B] font-body">
                           {achievement.subtitle}
                         </p>
                       </div>
                     </div>
-
-                    <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 mb-4">
-                      <FaStar className="text-yellow-500" />
-                      <span className="font-semibold">{achievement.date}</span>
+                    <div className="flex items-center gap-2 text-xs text-white/40 font-body mb-4">
+                      <FaStar className="text-[#F59E0B]" />
+                      <span>{achievement.date}</span>
                     </div>
                   </div>
 
-                  {/* Achievement Image/Photo */}
                   {achievement.image && (
                     <motion.div
                       whileHover={{ scale: 1.05, rotate: 2 }}
                       onClick={() => openImageModal(achievement.image, achievement.title)}
-                      className="relative w-32 h-32 rounded-2xl overflow-hidden shadow-2xl border-4 border-white dark:border-gray-800 flex-shrink-0 ml-4 cursor-pointer group"
+                      className="relative w-28 h-28 rounded-2xl overflow-hidden border-2 border-white/10 shadow-xl flex-shrink-0 ml-4 cursor-pointer group-hover:border-[#F59E0B]/50 transition-colors"
                     >
-                      <Image
-                        src={achievement.image}
-                        alt={achievement.title}
-                        fill
-                        className="object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent group-hover:from-black/70 transition-all"></div>
-                      <div className="absolute bottom-2 left-2 right-2">
-                        <div className="flex items-center justify-center">
-                          <FaAward className="text-yellow-400 text-2xl drop-shadow-lg group-hover:scale-110 transition-transform" />
-                        </div>
-                      </div>
-                      {/* Click to view hint */}
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                        <div className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full border border-white/30">
-                          <p className="text-white text-xs font-bold">Click to view</p>
-                        </div>
+                      <Image src={achievement.image} alt={achievement.title} fill className="object-cover" />
+                      <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all" />
+                      <div className="absolute bottom-2 left-2 right-2 flex justify-center">
+                        <FaAward className="text-[#F59E0B] text-xl drop-shadow-md" />
                       </div>
                     </motion.div>
                   )}
                 </div>
 
-                {/* Description */}
-                <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+                <p className="text-sm text-white/50 leading-relaxed font-body mb-6 flex-grow">
                   {achievement.description}
                 </p>
 
-                {/* Highlights */}
                 <div className="space-y-3">
-                  <h4 className="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wide flex items-center gap-2">
-                    <span className={`h-1 w-8 bg-gradient-to-r ${achievement.color} rounded-full`}></span>
+                  <h4 className="text-xs font-bold text-white/70 uppercase tracking-widest flex items-center gap-2">
+                    <span className="w-6 h-[2px] rounded-full bg-gradient-to-r from-[#F59E0B] to-[#EC4899]" />
                     Key Highlights
                   </h4>
                   <ul className="space-y-2">
-                    {achievement.highlights.map((highlight, highlightIndex) => (
-                      <motion.li
-                        key={highlightIndex}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={inView ? { opacity: 1, x: 0 } : {}}
-                        transition={{ duration: 0.5, delay: index * 0.1 + highlightIndex * 0.05 }}
-                        className="flex items-start gap-3 text-gray-600 dark:text-gray-400 text-sm"
-                      >
-                        <span className={`mt-1 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-gradient-to-r ${achievement.color}`}></span>
-                        <span>{highlight}</span>
-                      </motion.li>
+                    {achievement.highlights.map((highlight, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-xs text-white/45 font-body">
+                        <span className="mt-1 w-1.5 h-1.5 rounded-full flex-shrink-0 bg-[#F59E0B]" />
+                        {highlight}
+                      </li>
                     ))}
                   </ul>
                 </div>
               </div>
-
-              {/* Decorative corner */}
-              <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${achievement.color} opacity-10 rounded-bl-full`}></div>
             </motion.div>
           ))}
+
+          {/* GitHub Heatmap Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="glass rounded-3xl p-8 border border-white/8 hover:border-[#00F5FF]/20 transition-all duration-500 flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-12 h-12 glass rounded-2xl flex items-center justify-center border border-white/10 text-[#00F5FF]">
+                  <FaGithub size={24} />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-white/90 font-display">GitHub Contributions</h3>
+                  <p className="text-sm text-[#00F5FF] font-body">Consistency in coding</p>
+                </div>
+              </div>
+              <p className="text-sm text-white/50 font-body mb-6">
+                A visual representation of my daily coding habits, open-source contributions, and project commits over the last year.
+              </p>
+            </div>
+
+            <div className="glass rounded-2xl p-4 border border-white/5 overflow-x-auto w-full">
+              {/* GitHub chart embed */}
+              <div className="min-w-[500px]">
+                <img 
+                  src="https://ghchart.rshah.org/00F5FF/rohitkr963" 
+                  alt="Rohit's GitHub Commits" 
+                  className="w-full h-auto opacity-80 hover:opacity-100 transition-opacity"
+                />
+              </div>
+            </div>
+          </motion.div>
         </div>
 
-        {/* Stats Summary */}
+        {/* Stats Grid */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6"
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-4"
         >
           {[
-            { icon: FaTrophy, value: '1', label: 'National Hackathon Win', color: 'from-yellow-500 to-orange-500' },
-            { icon: FaCode, value: '10+', label: 'Projects Completed', color: 'from-blue-500 to-indigo-500' },
-            { icon: FaMedal, value: '8.56', label: 'CGPA', color: 'from-green-500 to-emerald-500' },
-            { icon: FaStar, value: '2+', label: 'Years Coding', color: 'from-purple-500 to-pink-500' }
-          ].map((stat, index) => (
+            { icon: FaTrophy, value: '1', label: 'Hackathon Win', color: '#F59E0B' },
+            { icon: FaCode, value: '500+', label: 'Commits', color: '#00F5FF' },
+            { icon: FaMedal, value: '8.56', label: 'CGPA', color: '#10B981' },
+            { icon: FaStar, value: '15+', label: 'Tech Stack', color: '#7C3AED' }
+          ].map((stat, i) => (
             <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={inView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.5, delay: 0.8 + (index * 0.1) }}
-              whileHover={{ scale: 1.05, y: -5 }}
-              className="relative bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 text-center border-2 border-gray-100 dark:border-gray-700"
+              key={i}
+              whileHover={{ scale: 1.05, y: -4 }}
+              className="glass rounded-2xl p-5 border border-white/8 text-center"
             >
-              <motion.div
-                whileHover={{ rotate: 360 }}
-                transition={{ duration: 0.6 }}
-                className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${stat.color} shadow-lg mb-3`}
-              >
-                <stat.icon className="text-xl text-white" />
-              </motion.div>
-              <div className={`text-3xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-2`}>
-                {stat.value}
+              <div className="flex justify-center mb-2">
+                <stat.icon size={20} style={{ color: stat.color }} />
               </div>
-              <div className="text-sm text-gray-600 dark:text-gray-400 font-semibold">
-                {stat.label}
-              </div>
+              <div className="text-2xl font-bold text-white/90 font-display mb-1">{stat.value}</div>
+              <div className="text-[11px] text-white/40 uppercase tracking-widest font-body">{stat.label}</div>
             </motion.div>
           ))}
         </motion.div>
+
       </div>
 
-      {/* Image Modal */}
       <ImageModal
         image={selectedImage}
         title={imageTitle}
