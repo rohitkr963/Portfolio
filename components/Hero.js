@@ -192,8 +192,8 @@ const Hero = () => {
             >
               Building scalable web applications using React.js, Node.js, Express.js & MongoDB.
               Currently shipping real products at{' '}
-              <span className="text-[#00F5FF] font-semibold">Mobiloitte Technologies</span> &{' '}
-              <span className="text-[#7C3AED] font-semibold">Fraylon Technologies</span>.
+              <span className="text-[#00F5FF] font-semibold">BlackCoffer</span> &{' '}
+              <span className="text-[#7C3AED] font-semibold">Mobiloitte Technologies</span>.
             </motion.p>
 
             <motion.div

@@ -13,10 +13,10 @@ const Education = () => {
   const education = [
     {
       degree: 'Bachelor of Computer Applications (BCA)',
-      field: 'Computer Science',
-      institution: 'Maharishi Markandeshwar University',
-      location: 'Haryana, India',
-      period: '2021 - 2025',
+      field: 'Computer Science & Applications',
+      institution: 'Maharishi Markandeshwar Deemed to be University',
+      location: 'Ambala, Haryana',
+      period: 'Aug 2023 – May 2026',
       cgpa: '8.56',
       achievements: [
         'Maintained excellent academic performance with 8.56 CGPA',
@@ -37,11 +37,11 @@ const Education = () => {
       ]
     },
     {
-      degree: 'Senior Secondary (12th)',
+      degree: 'Senior Secondary (Science - PCM)',
       field: 'Science Stream (PCM)',
       institution: 'R.N.S.H Inter College, BSEB',
-      location: 'Bihar, India',
-      period: '2021 - 2023',
+      location: 'Siwan, Bihar',
+      period: 'Jul 2021 – Feb 2023',
       percentage: '75.2%',
       achievements: [
         'Scored 75.2% in board examinations',
@@ -53,8 +53,8 @@ const Education = () => {
       degree: 'Secondary (10th)',
       field: 'General',
       institution: 'R.N.S.H Inter College, BSEB',
-      location: 'Bihar, India',
-      period: '2020 - 2021',
+      location: 'Siwan, Bihar',
+      period: 'Apr 2020 – Mar 2021',
       percentage: '82%',
       achievements: [
         'Achieved 82% in board examinations',

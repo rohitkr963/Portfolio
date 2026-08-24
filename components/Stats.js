@@ -22,7 +22,7 @@ const Stats = () => {
     },
     {
       icon: FaCode,
-      value: 3,
+      value: 15,
       suffix: '+',
       label: 'Technologies Mastered',
       color: 'from-purple-500 to-pink-500',
@@ -41,7 +41,7 @@ const Stats = () => {
       icon: FaBriefcase,
       value: 2,
       suffix: '',
-      label: 'Internships',
+      label: 'Industry Roles',
       color: 'from-rose-500 to-orange-500',
       bgColor: 'from-rose-100 to-orange-100 dark:from-rose-900/30 dark:to-orange-900/30'
     }

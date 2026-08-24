@@ -22,7 +22,7 @@ export const metadata = {
   metadataBase: new URL('https://rohitxdev-portfolio.netlify.app'),
   title: 'Rohit Kumar | Full Stack Developer & Software Engineer',
   description:
-    'Portfolio of Rohit Kumar — Full Stack Developer specializing in MERN stack, React.js, Next.js, Node.js, and REST APIs. Currently working at Mobiloitte Technologies & Fraylon Technologies.',
+    'Portfolio of Rohit Kumar — Full Stack Developer specializing in MERN stack, React.js, Next.js, Node.js, and REST APIs. Currently working at BlackCoffer & Mobiloitte Technologies.',
   keywords: [
     'Rohit Kumar',
     'Full Stack Developer',
