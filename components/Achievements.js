@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { FaTrophy, FaMedal, FaGithub, FaAward, FaStar } from 'react-icons/fa'
+import { FaTrophy, FaMedal, FaGithub, FaAward, FaStar, FaCode } from 'react-icons/fa'
 import { HiSparkles } from 'react-icons/hi'
 import Image from 'next/image'
 import ImageModal from './ImageModal'
@@ -55,6 +55,12 @@ const Achievements = () => {
     setSelectedImage(image)
     setImageTitle(title)
     setIsImageModalOpen(true)
+  }
+
+  const closeImageModal = () => {
+    setSelectedImage(null)
+    setImageTitle('')
+    setIsImageModalOpen(false)
   }
 
   const achievements = [
